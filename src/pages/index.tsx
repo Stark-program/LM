@@ -3,18 +3,21 @@ import Head from "next/head";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useParallax } from "react-scroll-parallax";
-import { useRef } from "react";
 
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
   // const hello = api.example.hello.useQuery({ text: "from tRPC" });
-  const target = useRef(null);
-  const parallax = useParallax({
-    speed: -10,
-    targetElement: target.current,
-  });
+
+  // const target = useRef(undefined);
+  // const parallax = useParallax({
+  //   speed: 0,
+  //   targetElement: target.current,
+  // });
+
+  const handleClick = () => {
+    console.log("clicked");
+  };
 
   return (
     <>
@@ -24,21 +27,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main
-        className="  relative flex min-h-screen  flex-col items-center overflow-x-hidden bg-gradient-to-b"
+        className="relative flex min-h-screen  flex-col items-center overflow-x-hidden bg-gradient-to-b"
         style={{
           backgroundImage: "url('/sattelite.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
           backgroundRepeat: "no-repeat",
-          zIndex: -20,
+          zIndex: 10,
         }}
-        ref={target}
       >
-        <div
-          className=" relative flex h-[530px]  w-full justify-center bg-[#000000cc]"
-          ref={parallax.ref}
-        >
+        <div className=" relative flex h-[530px]  w-full justify-center bg-[#000000cc]">
           <Image
             src={"/baseball-background.jpg"}
             alt="picture"
@@ -49,6 +48,7 @@ const Home: NextPage = () => {
             }}
             fill={true}
             priority={true}
+            className="relative"
           />
           <div className="flex w-2/3 flex-col space-y-16 p-10 ">
             <h1 className="text- m-1 font-overpass text-7xl font-bold text-white">
@@ -59,15 +59,16 @@ const Home: NextPage = () => {
               come to the right place! We offer a unique betting platform that
               allows you to predict the exact minute a baseball game will end.
             </p>
-            <button className="w-1/6 rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]">
+            <Link
+              className="w-1/6 rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] "
+              onClick={handleClick}
+              href={"/games"}
+            >
               Start Betting Now
-            </button>
+            </Link>
           </div>
         </div>
-        <div
-          className=" flex h-[410px] w-screen justify-center "
-          ref={parallax.ref}
-        >
+        <div className=" relative my-6 flex h-[410px] w-screen justify-center">
           <div className="my-10 flex w-2/3  flex-col rounded-lg border border-gray-300 bg-black p-10 pl-20">
             <h1 className="text-left font-overpass text-7xl font-bold text-white">
               How It Works
@@ -80,19 +81,17 @@ const Home: NextPage = () => {
             </ul>
           </div>
         </div>
-        <div
-          className="relative flex w-screen justify-center"
-          ref={parallax.ref}
-        >
+        <div className="relative flex w-screen justify-center">
           <Image
             src={"/purple_pink.jpg"}
             alt="picture"
             quality={100}
             style={{
-              zIndex: -11,
+              zIndex: -10,
               objectFit: "cover",
             }}
             fill={true}
+            className="relative"
           />
           <div className="my-10  w-2/3   rounded-lg border border-gray-300 bg-black p-10 pl-20">
             <h1 className="font-overpass text-4xl font-bold text-white">
