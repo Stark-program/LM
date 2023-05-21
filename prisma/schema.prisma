@@ -62,6 +62,38 @@ model VerificationToken {
     identifier String
     token      String   @unique
     expires    DateTime
-
     @@unique([identifier, token])
 }
+
+model GameDetails {
+    gameId String @unique
+    gameTime DateTime
+    teams Teams[]
+}
+
+model Teams {
+    game GameDetails @relation(fields: [gameId], references: [gameId])
+    gameId String @unique
+    away TeamDetails
+    home TeamDetails
+}
+
+model TeamDetails {
+    seriesNumber Int
+    splitSquad Boolean
+    leagueRecord LeagueRecord
+    team Team
+}
+
+model LeagueRecord {
+    wins Int
+    losses Int
+    pct String
+}
+
+model Team {
+    id Int
+    name String
+    link String
+}
+

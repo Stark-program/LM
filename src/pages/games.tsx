@@ -2,7 +2,8 @@ import type { GetServerSideProps } from "next";
 import axios from "axios";
 import Game from "~/components/Game";
 import { format, add } from "date-fns";
-
+import { Prisma } from "@prisma/client";
+import { prisma } from "~/server/db";
 export default function Games({ gameData }: GameDataPropsType) {
   return (
     <>
@@ -17,9 +18,7 @@ export default function Games({ gameData }: GameDataPropsType) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const currentDate = format(new Date(), "yyyy-MM-dd");
-  const futureDate = format(add(new Date(), { days: 7 }), "yyyy-MM-dd");
-  console.log(currentDate);
-  console.log(futureDate);
+  const futureDate = format(add(new Date(), { days: 1 }), "yyyy-MM-dd");
   const res: ResDataType = await axios.get(
     `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}`
   );
@@ -30,12 +29,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   for (let i = 0; i < games_response.length; i++) {
     const games: GameType[] = games_response[i]?.games || [];
+
     games.forEach((game) => {
-      gameData.push({
-        time: game.gameDate,
-        teams: game.teams,
-        dayNight: game.dayNight,
-      });
+      if (game.teams.home.team.id === 115 || game.teams.away.team.id === 115) {
+        gameData.push({
+          time: game.gameDate,
+          teams: game.teams,
+          dayNight: game.dayNight,
+        });
+        prisma.
+      }
     });
   }
 
@@ -66,7 +69,7 @@ interface GamesResponseType {
   events: [];
 }
 
-interface TeamsType {
+export interface TeamsType {
   away: {
     leagueRecord: {
       wins: number;

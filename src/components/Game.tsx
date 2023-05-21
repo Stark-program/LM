@@ -3,6 +3,7 @@ import { format, compareAsc } from "date-fns";
 
 export default function Game({ gameData }: GameDataPropsType) {
   const games: GameDataType[] = gameData || [];
+  console.log(gameData);
   return (
     <div className="flex flex-col  space-y-10">
       {games.map((game, index) => {
