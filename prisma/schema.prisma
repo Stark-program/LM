@@ -65,11 +65,6 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model GameDetails {
-    gameId String @unique
-    gameTime DateTime
-}
-
 model Team {
   id        Int     @id
   homeGames Game[]  @relation("homeTeam")
@@ -88,36 +83,4 @@ model Game {
   dayNight   String
 }
 
-// model Teams {
-//     game GameDetails @relation(fields: [gameId], references: [gameId])
-//     gameId String @unique
-//     away AwayTeam 
-//     home HomeTeam
-// }
-
-// model HomeTeam {
-//     seriesNumber Int @unique
-//     splitSquad Boolean
-//     leagueRecord LeagueRecord
-//     team Team
-// }
-
-// model AwayTeam {
-//     seriesNumber Int @unique
-//     splitSquad Boolean
-//     leagueRecord LeagueRecord
-//     team Team
-// }
-
-// model LeagueRecord {
-//     wins Int
-//     losses Int
-//     pct String
-// }
-
-// model Team {
-//     id Int
-//     name String
-//     link String
-// }
 
