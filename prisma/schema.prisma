@@ -68,32 +68,56 @@ model VerificationToken {
 model GameDetails {
     gameId String @unique
     gameTime DateTime
-    teams Teams[]
-}
-
-model Teams {
-    game GameDetails @relation(fields: [gameId], references: [gameId])
-    gameId String @unique
-    away TeamDetails
-    home TeamDetails
-}
-
-model TeamDetails {
-    seriesNumber Int
-    splitSquad Boolean
-    leagueRecord LeagueRecord
-    team Team
-}
-
-model LeagueRecord {
-    wins Int
-    losses Int
-    pct String
 }
 
 model Team {
-    id Int
-    name String
-    link String
+  id        Int     @id
+  homeGames Game[]  @relation("homeTeam")
+  awayGames Game[]  @relation("awayTeam")
+  name      String
+  record    String
 }
+
+model Game {
+  id         Int    @id
+  homeTeam   Team   @relation("homeTeam", fields: [homeTeamId], references: [id])
+  homeTeamId Int
+  awayTeam   Team   @relation("awayTeam", fields: [awayTeamId], references: [id])
+  awayTeamId Int
+  time       String
+  dayNight   String
+}
+
+// model Teams {
+//     game GameDetails @relation(fields: [gameId], references: [gameId])
+//     gameId String @unique
+//     away AwayTeam 
+//     home HomeTeam
+// }
+
+// model HomeTeam {
+//     seriesNumber Int @unique
+//     splitSquad Boolean
+//     leagueRecord LeagueRecord
+//     team Team
+// }
+
+// model AwayTeam {
+//     seriesNumber Int @unique
+//     splitSquad Boolean
+//     leagueRecord LeagueRecord
+//     team Team
+// }
+
+// model LeagueRecord {
+//     wins Int
+//     losses Int
+//     pct String
+// }
+
+// model Team {
+//     id Int
+//     name String
+//     link String
+// }
 

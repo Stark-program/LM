@@ -37,7 +37,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
           teams: game.teams,
           dayNight: game.dayNight,
         });
-        prisma.
       }
     });
   }
