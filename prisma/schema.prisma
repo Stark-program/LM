@@ -70,7 +70,9 @@ model Team {
   homeGames Game[]  @relation("homeTeam")
   awayGames Game[]  @relation("awayTeam")
   name      String
-  record    String
+  wins   Int
+  losses Int
+  pct    String
 }
 
 model Game {
@@ -82,5 +84,14 @@ model Game {
   time       String
   dayNight   String
 }
+
+model Bet {
+  id Int @id @default(autoincrement())
+  gameId String
+  userId String
+  timeslot DateTime
+}
+
+
 
 

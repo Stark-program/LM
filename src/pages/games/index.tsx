@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import type { GetServerSideProps } from "next";
 import axios from "axios";
 import Game from "~/components/Game";
 import { format, add } from "date-fns";
-import { Prisma } from "@prisma/client";
-import { prisma } from "~/server/db";
+import { PrismaClient } from "@prisma/client";
 export default function Games({ gameData }: GameDataPropsType) {
   return (
     <>
@@ -33,6 +33,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     games.forEach((game) => {
       if (game.teams.home.team.id === 115 || game.teams.away.team.id === 115) {
         gameData.push({
+          id: game.gamePk,
           time: game.gameDate,
           teams: game.teams,
           dayNight: game.dayNight,
@@ -100,6 +101,7 @@ export interface TeamsType {
 }
 
 export interface GameDataType {
+  id: number;
   time: string;
   teams: TeamsType;
   dayNight: string;

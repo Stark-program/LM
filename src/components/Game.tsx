@@ -1,5 +1,6 @@
 import type { GameDataPropsType, GameDataType } from "~/pages/games";
 import { format, compareAsc } from "date-fns";
+import Link from "next/link";
 
 export default function Game({ gameData }: GameDataPropsType) {
   const games: GameDataType[] = gameData || [];
@@ -23,9 +24,17 @@ export default function Game({ gameData }: GameDataPropsType) {
               <div className="flex w-2/5">{`${game.teams.home.team.name}(${game.teams.home.leagueRecord.wins} - ${game.teams.home.leagueRecord.losses}) vs ${game.teams.away.team.name}(${game.teams.away.leagueRecord.wins} - ${game.teams.away.leagueRecord.losses}) `}</div>
               <div className="flex w-1/5 justify-end">{game.dayNight}</div>
               <div className="flex w-1/5 justify-end">
-                <button className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]">
+                <Link
+                  className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
+                  href={{
+                    pathname: `/games/${gameData[index].id}`,
+                    query: {
+                      time: {game.time},
+                    },
+                  }}
+                >
                   Bet on this time
-                </button>
+                </Link>
               </div>
             </div>
           );
