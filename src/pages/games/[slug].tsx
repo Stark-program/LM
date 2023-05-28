@@ -1,13 +1,30 @@
 import type { GetServerSideProps } from "next";
 import axios from "axios";
-import { format, add, addMinutes } from "date-fns";
+import { format, add, addMinutes, parseISO } from "date-fns";
+import BetTime from "~/components/BetTime";
 
 export default function BetGame({ gameData, gameTime }: GameDataType) {
   console.log(gameData, gameTime);
   const date = new Date(gameTime);
-  const futureDate = format(addMinutes(date, 180), "hh:mm:ss");
-  console.log(futureDate);
-  return <div>Bet</div>;
+  console.log(date);
+
+  const renderTimeSlots = () => {
+    const times = [];
+    for (let i = 0; i < 120; i++) {
+      const startBettingTime = format(addMinutes(date, 90 + i), "hh:mm:ss");
+      console.log(startBettingTime);
+      times.push(startBettingTime);
+    }
+    return <BetTime betTime={times} />;
+  };
+
+  return (
+    <div className="flex  justify-center overflow-x-hidden bg-gray-300">
+      <div className="flex w-5/6 items-center justify-center bg-black">
+        {renderTimeSlots()}
+      </div>
+    </div>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

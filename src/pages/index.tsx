@@ -37,7 +37,7 @@ const Home: NextPage = () => {
           zIndex: 10,
         }}
       >
-        <div className=" relative flex h-[530px]  w-full justify-center bg-[#000000cc]">
+        <div className="relative flex h-[530px] w-full justify-center bg-[#000000cc]">
           <Image
             src={"/baseball-background.jpg"}
             alt="picture"

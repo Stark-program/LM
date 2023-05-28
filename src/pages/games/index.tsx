@@ -3,7 +3,6 @@ import type { GetServerSideProps } from "next";
 import axios from "axios";
 import Game from "~/components/Game";
 import { format, add } from "date-fns";
-import { PrismaClient } from "@prisma/client";
 export default function Games({ gameData }: GameDataPropsType) {
   return (
     <>

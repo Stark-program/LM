@@ -65,25 +65,25 @@ model VerificationToken {
     @@unique([identifier, token])
 }
 
-model Team {
-  id        Int     @id
-  homeGames Game[]  @relation("homeTeam")
-  awayGames Game[]  @relation("awayTeam")
-  name      String
-  wins   Int
-  losses Int
-  pct    String
-}
+// model Team {
+//   id        Int     @id
+//   homeGames Game[]  @relation("homeTeam")
+//   awayGames Game[]  @relation("awayTeam")
+//   name      String
+//   wins   Int
+//   losses Int
+//   pct    String
+// }
 
-model Game {
-  id         Int    @id
-  homeTeam   Team   @relation("homeTeam", fields: [homeTeamId], references: [id])
-  homeTeamId Int
-  awayTeam   Team   @relation("awayTeam", fields: [awayTeamId], references: [id])
-  awayTeamId Int
-  time       String
-  dayNight   String
-}
+// model Game {
+//   id         Int    @id
+//   homeTeam   Team   @relation("homeTeam", fields: [homeTeamId], references: [id])
+//   homeTeamId Int
+//   awayTeam   Team   @relation("awayTeam", fields: [awayTeamId], references: [id])
+//   awayTeamId Int
+//   time       String
+//   dayNight   String
+// }
 
 model Bet {
   id Int @id @default(autoincrement())

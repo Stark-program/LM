@@ -29,7 +29,7 @@ export default function Game({ gameData }: GameDataPropsType) {
                   href={{
                     pathname: `/games/${gameData[index].id}`,
                     query: {
-                      time: {game.time},
+                      time: startDate,
                     },
                   }}
                 >
