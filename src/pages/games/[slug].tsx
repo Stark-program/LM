@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 import axios from "axios";
-import { format, add, addMinutes, parseISO } from "date-fns";
+import { format, addMinutes } from "date-fns";
 import BetTime from "~/components/BetTime";
 
 export default function BetGame({ gameData, gameTime }: GameDataType) {

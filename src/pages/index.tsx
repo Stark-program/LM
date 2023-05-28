@@ -7,45 +7,6 @@ import Image from "next/image";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const { data: session } = useSession();
-  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
-  // const target = useRef(undefined);
-  // const parallax = useParallax({
-  //   speed: 0,
-  //   targetElement: target.current,
-  // });
-
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
-  const handleSession = () => {
-    if (session) {
-      return (
-        <div className="absolute right-20 top-20">
-          <h4 className="font-overpass text-lg font-bold text-white">
-            Signed in as {session.user.name}
-          </h4>
-          <button
-            className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
-            onClick={() => signOut()}
-          >
-            Sign Out
-          </button>
-        </div>
-      );
-    }
-    return (
-      <button
-        className="absolute right-20 top-20  rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
-        onClick={() => signIn()}
-      >
-        Log In
-      </button>
-    );
-  };
-
   return (
     <>
       <Head>
@@ -78,7 +39,7 @@ const Home: NextPage = () => {
             className="relative"
           />
           <div className="flex w-2/3 flex-col space-y-16 p-10 ">
-            {handleSession()}
+            {AuthShowcase()}
             <h1 className="text- m-1 font-overpass text-7xl font-bold text-white">
               Bet on Baseball with minute accuracy
             </h1>
@@ -89,7 +50,6 @@ const Home: NextPage = () => {
             </p>
             <Link
               className="w-1/6 rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] "
-              onClick={handleClick}
               href={"/games"}
             >
               Start Betting Now
@@ -184,10 +144,9 @@ const AuthShowcase: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
+    <div className="absolute right-20 top-20 flex flex-col items-center justify-center gap-4">
+      <p className="text-center font-overpass text-lg font-bold text-white">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
