@@ -1,5 +1,5 @@
 import type { GameDataPropsType, GameDataType } from "~/pages/games";
-import { format, compareAsc } from "date-fns";
+import { format } from "date-fns";
 import Link from "next/link";
 
 export default function Game({ gameData }: GameDataPropsType) {
@@ -29,7 +29,7 @@ export default function Game({ gameData }: GameDataPropsType) {
                   href={{
                     pathname: `/games/${gameData[index].id}`,
                     query: {
-                      time: startDate,
+                      time: game.time,
                     },
                   }}
                 >

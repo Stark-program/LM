@@ -4,15 +4,11 @@ import { format, addMinutes } from "date-fns";
 import BetTime from "~/components/BetTime";
 
 export default function BetGame({ gameData, gameTime }: GameDataType) {
-  console.log(gameData, gameTime);
   const date = new Date(gameTime);
-  console.log(date);
-
   const renderTimeSlots = () => {
     const times = [];
     for (let i = 0; i < 120; i++) {
       const startBettingTime = format(addMinutes(date, 90 + i), "hh:mm:ss");
-      console.log(startBettingTime);
       times.push(startBettingTime);
     }
     return <BetTime betTime={times} />;
