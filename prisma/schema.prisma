@@ -57,6 +57,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     phone         String
+    password      String
 }
 
 model VerificationToken {
