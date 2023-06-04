@@ -40,7 +40,7 @@ const Home: NextPage = () => {
           />
           <div className="flex w-2/3 flex-col space-y-16 p-10 ">
             {AuthShowcase()}
-            <h1 className="text- m-1 font-overpass text-7xl font-bold text-white">
+            <h1 className="font-overpass m-1  text-7xl font-bold text-white">
               Bet on Baseball with minute accuracy
             </h1>
             <p className="font-overpass text-lg text-[#e5e0df]">
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
               allows you to predict the exact minute a baseball game will end.
             </p>
             <Link
-              className="w-1/6 rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] "
+              className="font-overpass w-1/6 rounded bg-[#fd3594ff] p-2 text-lg font-bold text-black hover:bg-[#85214f] "
               href={"/games"}
             >
               Start Betting Now
@@ -58,10 +58,10 @@ const Home: NextPage = () => {
         </div>
         <div className=" relative my-6 flex h-[410px] w-screen justify-center">
           <div className="my-10 flex w-2/3  flex-col rounded-lg border border-gray-300 bg-black p-10 pl-20">
-            <h1 className="text-left font-overpass text-7xl font-bold text-white">
+            <h1 className="font-overpass text-left text-7xl font-bold text-white">
               How It Works
             </h1>
-            <ul className="list-disc space-y-5 p-5 font-overpass font-bold text-[#e5e0df]">
+            <ul className="font-overpass list-disc space-y-5 p-5 font-bold text-[#e5e0df]">
               <li>Choose a game to bet on</li>
               <li>Select the minute you think the game will end</li>
               <li>Place your bet</li>
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
                 <h2 className="font-overpass text-xl font-bold text-white">
                   What if the game goes into extra innings?
                 </h2>
-                <p className="mt-4 font-overpass text-[#e5e0df]">
+                <p className="font-overpass mt-4 text-[#e5e0df]">
                   If the game goes into extra innings, the end time will be
                   determined by the official MLB scoreboard. Your bet will still
                   be valid as long as the game ends at the predicted minute.
@@ -100,7 +100,7 @@ const Home: NextPage = () => {
                 <h2 className="font-overpass text-xl font-bold text-white">
                   How do I know if I won?
                 </h2>
-                <p className="mt-4 font-overpass text-[#e5e0df]">
+                <p className="font-overpass mt-4 text-[#e5e0df]">
                   If the game ends at the precise minute you predicted, you win!
                   We'll notify you via email and update your account balance.
                 </p>
@@ -109,7 +109,7 @@ const Home: NextPage = () => {
                 <h2 className="font-overpass text-xl font-bold text-white">
                   What is the payout for winning bets?
                 </h2>
-                <p className="mt-4 font-overpass text-[#e5e0df]">
+                <p className="font-overpass mt-4 text-[#e5e0df]">
                   The payout for winning bets varies depending on the odds at
                   the time of betting. Check the odds for each game before
                   placing your bets.
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
                 <h2 className="font-overpass text-xl font-bold text-white">
                   Is it legal to bet on baseball games online?
                 </h2>
-                <p className="mt-4 font-overpass text-[#e5e0df]">
+                <p className="font-overpass mt-4 text-[#e5e0df]">
                   Yes, it is legal to bet on baseball games online as long as
                   you're of legal gambling age and betting on a licensed
                   platform.
@@ -145,7 +145,7 @@ const AuthShowcase: React.FC = () => {
 
   return (
     <div className="absolute right-20 top-20 flex flex-col items-center justify-center gap-4">
-      <p className="text-center font-overpass text-lg font-bold text-white">
+      <p className="font-overpass text-center text-lg font-bold text-white">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
       </p>
       <button
