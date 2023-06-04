@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
-
+import { useRouter } from "next/router";
 export default function SignUp() {
+  const router = useRouter()
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -12,6 +13,9 @@ export default function SignUp() {
 
   const handleFormSubmit = async (e) => {
     const res = await axios.post("/api/user", user);
+    if (res.status === 201) {
+      router.push("/")
+    }
     console.log(res);
   };
   return (
@@ -22,7 +26,7 @@ export default function SignUp() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={false}>
               <div>
                 <label
                   htmlFor="name"
@@ -146,7 +150,9 @@ export default function SignUp() {
                 </div>
               </div> */}
               <button
-                onClick={() => void handleFormSubmit()}
+                onClick={(e) => { 
+                  e.preventDefault() 
+                  void handleFormSubmit(e)}}
                 className="bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
               >
                 Create an account
