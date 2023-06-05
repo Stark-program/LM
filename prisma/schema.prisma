@@ -56,10 +56,9 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    phone         String
-    password      String
+    phone         String?
+    password      String?
 }
-
 model VerificationToken {
     identifier String
     token      String   @unique

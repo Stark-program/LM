@@ -1,6 +1,19 @@
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { type FormEventHandler, useState } from "react";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    const res = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    });
+  };
   return (
     <section className=" bg-gray-900">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -9,7 +22,11 @@ export default function SignIn() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-white dark:text-white md:text-2xl">
               Sign in to your account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form
+              className="space-y-4 md:space-y-6"
+              action="#"
+              onSubmit={handleSubmit}
+            >
               <div>
                 <label
                   htmlFor="email"
@@ -24,6 +41,8 @@ export default function SignIn() {
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-500  bg-gray-700 p-2.5 text-white dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                   placeholder="name@company.com"
                   required={true}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
               </div>
               <div>
@@ -40,6 +59,8 @@ export default function SignIn() {
                   placeholder="••••••••"
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-500  bg-gray-700 p-2.5 text-white dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                   required={true}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 ></input>
               </div>
               <div className="flex items-center justify-between">

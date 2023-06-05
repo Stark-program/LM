@@ -12,11 +12,10 @@ export default function SignUp() {
   });
 
   const handleFormSubmit = async (e) => {
-    const res = await axios.post("/api/user", user);
+    const res = await axios.post("/api/createuser", user);
     if (res.status === 201) {
       router.push("/");
     }
-    console.log(res);
   };
   return (
     <section className=" bg-gray-900">

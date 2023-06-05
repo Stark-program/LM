@@ -1,23 +1,19 @@
 import type { GetServerSideProps } from "next";
 import axios from "axios";
-import { format, addMinutes } from "date-fns";
-import BetTime from "~/components/BetTime";
 
-export default function BetGame({ gameData, gameTime }: GameDataType) {
-  const date = new Date(gameTime);
-  const renderTimeSlots = () => {
-    const times = [];
-    for (let i = 0; i < 120; i++) {
-      const startBettingTime = format(addMinutes(date, 90 + i), "hh:mm:ss");
-      times.push(startBettingTime);
-    }
-    return <BetTime betTime={times} />;
-  };
+import BetTime from "~/components/BetTime";
+import { useSession } from "next-auth/react";
+
+export default function BetGame({ gameData, gameTime, gameId }: GameDataType) {
+  console.log(gameId);
+  console.log(gameTime);
+  const session = useSession();
+  console.log("session-games/slug", session);
 
   return (
     <div className="flex  justify-center overflow-x-hidden bg-gray-300">
       <div className="flex w-5/6 items-center justify-center bg-black">
-        {renderTimeSlots()}
+        <BetTime session={session} gameId={gameId} gameTime={gameTime} />
       </div>
     </div>
   );
@@ -34,11 +30,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       gameData: res.data,
       gameTime: time,
+      gameId: slug,
     },
   };
 };
 
 interface GameDataType {
+  gameId: string;
   gameTime: string;
   gameData: {
     copyright: string;
