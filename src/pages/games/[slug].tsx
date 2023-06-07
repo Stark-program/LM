@@ -11,8 +11,6 @@ export default function BetGame({
   currentBets,
 }: GameDataType) {
   const session = useSession();
-  console.log("session-games/slug", session);
-  console.log("currentBets", currentBets);
 
   return (
     <div className="flex  justify-center overflow-x-hidden bg-gray-300">
@@ -39,7 +37,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       gameId: slug,
     },
   });
-  console.log("currentBets", currentBets);
 
   return {
     props: {

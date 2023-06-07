@@ -137,7 +137,7 @@ export default Home;
 
 const AuthShowcase: React.FC = () => {
   const sessionData = useSession();
-  console.log("session-home", sessionData);
+
   // const { data: secretMessage } = api.example.getSecretMessage.useQuery(
   //   undefined, // no input
   //   { enabled: sessionData?.user !== undefined }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { format, addMinutes } from "date-fns";
+import { useState } from "react";
 
 export default function BetTime({
   session,
@@ -7,15 +8,13 @@ export default function BetTime({
   gameTime,
   currentBets,
 }: BetTimeType) {
-  console.log(gameTime);
+  const [activeBets, setActiveBets] = useState(currentBets);
   const date = new Date(gameTime);
-  console.log(date);
 
   const times = [];
   for (let i = 0; i < 120; i++) {
     const betTime = addMinutes(date, 90 + i).toISOString();
 
-    // console.log(test);
     times.push(betTime);
   }
 
@@ -26,6 +25,15 @@ export default function BetTime({
       gameId: gameId,
     };
     const res = await axios.post("/api/handlebet", data);
+    if (res.status === 201) {
+      setActiveBets((prevState) => [
+        ...prevState,
+        { userName: res.data.name, timeslot: res.data.timeslot },
+      ]);
+    }
+    if (res.status === 200 && res.data.failure) {
+      alert(res.data.failure);
+    }
   };
 
   return (
@@ -33,12 +41,12 @@ export default function BetTime({
       <ul>
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
-          const similarBets = currentBets.find((element: CurrentBets) => {
+          const similarBets = activeBets.find((element: CurrentBets) => {
             if (element.timeslot === time) {
               return element;
             }
           });
-          console.log("similarBet", similarBets);
+
           return (
             <div className="flex w-full flex-row space-y-2" key={index}>
               <li className="flex w-1/5 text-white  ">{betTime}</li>

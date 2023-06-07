@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.body);
+    console.log("req", req.body);
     const user = await prisma.user.findUnique({
       where: {
         email: req.body.email,
@@ -17,14 +17,31 @@ export default async function handler(
       return null;
     }
 
-    const bet = await prisma.bet.create({
-      data: {
+    const bet = await prisma.bet.findFirst({
+      where: {
         gameId: req.body.gameId,
         userId: user.id,
-        timeslot: req.body.time,
-        userName: user.name,
       },
     });
+
+    if (bet === null) {
+      const createBet = await prisma.bet.create({
+        data: {
+          gameId: req.body.gameId,
+          userId: user.id,
+          userName: user.name,
+          timeslot: req.body.time,
+        },
+      });
+      res
+        .status(201)
+        .json({
+          success: "Bet Created",
+          name: user.name,
+          timeslot: req.body.time,
+        });
+    } else
+      res.status(200).json({ failure: "Bet already placed for this game" });
   } catch (err) {
     console.log(err);
   }
