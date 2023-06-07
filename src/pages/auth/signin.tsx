@@ -1,8 +1,16 @@
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 import { type FormEventHandler, useState } from "react";
+import type {
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from "next";
+import { getServerSession } from "next-auth/next";
+import authOptions from "../api/auth/[...nextauth]";
 
-export default function SignIn() {
+export default function SignIn({
+  providers,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -11,9 +19,10 @@ export default function SignIn() {
     const res = await signIn("credentials", {
       email: email,
       password: password,
-      redirect: false,
+      redirect: true,
     });
   };
+  console.log(providers);
   return (
     <section className=" bg-gray-900">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -22,6 +31,46 @@ export default function SignIn() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-white dark:text-white md:text-2xl">
               Sign in to your account
             </h1>
+            <>
+              {Object.values(providers).map((provider) => {
+                if (provider.id === `credentials`) return null;
+                if (provider.id === "discord") {
+                  return (
+                    <div
+                      className="flex w-full justify-center"
+                      key={provider.name}
+                    >
+                      <button
+                        type="button"
+                        data-te-ripple-init
+                        data-te-ripple-color="light"
+                        class="mb-2  flex w-full justify-center rounded bg-[#7289da] px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                        onClick={() => signIn(provider.id)}
+                      >
+                        Discord
+                      </button>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div
+                    className="flex w-full justify-center"
+                    key={provider.name}
+                  >
+                    <button
+                      onClick={() => signIn(provider.id)}
+                      type="button"
+                      data-te-ripple-init
+                      data-te-ripple-color="light"
+                      class="mb-2 flex w-full justify-center  rounded bg-[#ea4335] px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
+                    >
+                      Google
+                    </button>
+                  </div>
+                );
+              })}
+            </>
             <form
               className="space-y-4 md:space-y-6"
               action="#"
@@ -65,7 +114,7 @@ export default function SignIn() {
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
-                  <div className="flex h-5 items-center">
+                  {/* <div className="flex h-5 items-center">
                     <input
                       id="remember"
                       aria-describedby="remember"
@@ -81,7 +130,7 @@ export default function SignIn() {
                     >
                       Remember me
                     </label>
-                  </div>
+                  </div> */}
                 </div>
                 <a
                   href="#"
@@ -111,4 +160,21 @@ export default function SignIn() {
       </div>
     </section>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  // If the user is already logged in, redirect.
+  // Note: Make sure not to redirect to the same page
+  // To avoid an infinite loop!
+  if (session) {
+    return { redirect: { destination: "/" } };
+  }
+
+  const providers = await getProviders();
+
+  return {
+    props: { providers: providers ?? [] },
+  };
 }

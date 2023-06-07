@@ -8,7 +8,7 @@ export default function BetTime({
   gameTime,
   currentBets,
 }: BetTimeType) {
-  const [activeBets, setActiveBets] = useState(currentBets);
+  const [activeBets, setActiveBets] = useState<CurrentBets[]>(currentBets);
   const date = new Date(gameTime);
 
   const times = [];
@@ -26,7 +26,7 @@ export default function BetTime({
     };
     const res = await axios.post("/api/handlebet", data);
     if (res.status === 201) {
-      setActiveBets((prevState) => [
+      setActiveBets((prevState: CurrentBets[]) => [
         ...prevState,
         { userName: res.data.name, timeslot: res.data.timeslot },
       ]);
