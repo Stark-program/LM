@@ -22,6 +22,7 @@ export default async function handler(
         gameId: req.body.gameId,
         userId: user.id,
         timeslot: req.body.time,
+        userName: user.name,
       },
     });
   } catch (err) {

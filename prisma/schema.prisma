@@ -90,6 +90,7 @@ model Bet {
   id Int @id @default(autoincrement())
   gameId String
   userId String
+  userName String
   timeslot DateTime
 }
 

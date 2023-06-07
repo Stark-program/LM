@@ -1,7 +1,12 @@
 import axios from "axios";
 import { format, addMinutes } from "date-fns";
 
-export default function BetTime({ session, gameId, gameTime }: BetTimeType) {
+export default function BetTime({
+  session,
+  gameId,
+  gameTime,
+  currentBets,
+}: BetTimeType) {
   console.log(gameTime);
   const date = new Date(gameTime);
   console.log(date);
@@ -14,8 +19,6 @@ export default function BetTime({ session, gameId, gameTime }: BetTimeType) {
     times.push(betTime);
   }
 
-  const renderTimes = () => {};
-
   const handleBet = async (time: string, email: string, gameId: string) => {
     const data = {
       time: time,
@@ -24,23 +27,35 @@ export default function BetTime({ session, gameId, gameTime }: BetTimeType) {
     };
     const res = await axios.post("/api/handlebet", data);
   };
-  console.log("betTime", session);
+
   return (
     <div className="flex w-full flex-col">
       <ul>
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
+          const similarBets = currentBets.find((element: CurrentBets) => {
+            if (element.timeslot === time) {
+              return element;
+            }
+          });
+          console.log("similarBet", similarBets);
           return (
             <div className="flex w-full flex-row space-y-2" key={index}>
               <li className="flex w-1/5 text-white  ">{betTime}</li>
-              <button
-                className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
-                onClick={() =>
-                  void handleBet(time, session.data.user.email, gameId)
-                }
-              >
-                Bet
-              </button>
+              {similarBets !== undefined ? (
+                <h4 className="font-overpass text-white">
+                  {similarBets.userName}
+                </h4>
+              ) : (
+                <button
+                  className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
+                  onClick={() =>
+                    void handleBet(time, session.data.user.email, gameId)
+                  }
+                >
+                  Bet
+                </button>
+              )}
             </div>
           );
         })}
@@ -50,6 +65,7 @@ export default function BetTime({ session, gameId, gameTime }: BetTimeType) {
 }
 
 interface BetTimeType {
+  currentBets: CurrentBets;
   gameTime: string;
   gameId: string;
   // betTime: Array<string>;
@@ -61,4 +77,11 @@ interface BetTimeType {
       };
     };
   };
+}
+
+interface CurrentBets {
+  gameId: string;
+  userId: string;
+  userName: string;
+  timeslot: string;
 }

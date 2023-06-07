@@ -1,19 +1,28 @@
 import type { GetServerSideProps } from "next";
 import axios from "axios";
-
 import BetTime from "~/components/BetTime";
 import { useSession } from "next-auth/react";
+import { prisma } from "~/server/db";
 
-export default function BetGame({ gameData, gameTime, gameId }: GameDataType) {
-  console.log(gameId);
-  console.log(gameTime);
+export default function BetGame({
+  gameData,
+  gameTime,
+  gameId,
+  currentBets,
+}: GameDataType) {
   const session = useSession();
   console.log("session-games/slug", session);
+  console.log("currentBets", currentBets);
 
   return (
     <div className="flex  justify-center overflow-x-hidden bg-gray-300">
       <div className="flex w-5/6 items-center justify-center bg-black">
-        <BetTime session={session} gameId={gameId} gameTime={gameTime} />
+        <BetTime
+          session={session}
+          gameId={gameId}
+          gameTime={gameTime}
+          currentBets={currentBets}
+        />
       </div>
     </div>
   );
@@ -25,17 +34,30 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await axios.get(
     `http://statsapi.mlb.com/api/v1/game/${slug}/content`
   );
+  const currentBets = await prisma.bet.findMany({
+    where: {
+      gameId: slug,
+    },
+  });
+  console.log("currentBets", currentBets);
 
   return {
     props: {
       gameData: res.data,
       gameTime: time,
       gameId: slug,
+      currentBets: JSON.parse(JSON.stringify(currentBets)),
     },
   };
 };
 
 interface GameDataType {
+  currentBets: {
+    gameId: string;
+    userId: string;
+    userName: string;
+    timeslot: string;
+  };
   gameId: string;
   gameTime: string;
   gameData: {
