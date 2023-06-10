@@ -28,14 +28,16 @@ export default function BetTime({
     };
 
     const res = await axios.post("/api/handlebet", data);
+
+    const resData = res.data as PlaceBetResData;
     if (res.status === 201) {
-      setActiveBets((prevState: CurrentBets[]) => [
+      setActiveBets((prevState: CurrentBets) => [
         ...prevState,
-        { userName: res.data.name, timeslot: res.data.timeslot },
+        { userName: resData.name, timeslot: resData.timeslot },
       ]);
     }
-    if (res.status === 200 && res.data.failure) {
-      alert(res.data.failure);
+    if (res.status === 200 && !resData.success) {
+      alert("You have already placed a bet for this game");
     }
   };
 
@@ -115,6 +117,11 @@ export default function BetTime({
 }
 
 type DeleteResData = {
+  success: boolean;
+  name: string;
+  timeslot: string;
+};
+type PlaceBetResData = {
   success: boolean;
   name: string;
   timeslot: string;

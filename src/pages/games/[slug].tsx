@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      gameData: res.data,
+      gameData: res.data as GameDataType,
       gameTime: time,
       gameId: slug,
       currentBets: JSON.parse(JSON.stringify(currentBets)),

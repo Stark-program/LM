@@ -33,15 +33,12 @@ export default async function handler(
           timeslot: req.body.time,
         },
       });
-      res
-        .status(201)
-        .json({
-          success: "Bet Created",
-          name: user.name,
-          timeslot: req.body.time,
-        });
-    } else
-      res.status(200).json({ failure: "Bet already placed for this game" });
+      res.status(201).json({
+        success: true,
+        name: user.name,
+        timeslot: req.body.time,
+      });
+    } else res.status(200).json({ success: false });
   } catch (err) {
     console.log(err);
   }
