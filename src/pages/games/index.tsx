@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const currentDate = format(new Date(), "yyyy-MM-dd");
   const futureDate = format(add(new Date(), { days: 1 }), "yyyy-MM-dd");
   const res: ResDataType = await axios.get(
-    `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}`
+    `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}&teamId=115`
   );
 
   const games_response = res.data.dates;
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-interface ResDataType {
+export interface ResDataType {
   data: {
     copyright: string;
     totalItems: number;
@@ -107,10 +107,10 @@ export interface GameDataType {
 }
 
 export interface GameDataPropsType {
-  gameData: GameDataType;
+  gameData: GameDataType[];
 }
 
-interface GameType {
+export interface GameType {
   gamePk: number;
   link: string;
   gameType: string;

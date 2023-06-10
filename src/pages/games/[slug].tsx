@@ -4,6 +4,8 @@ import BetTime from "~/components/BetTime";
 import { useSession } from "next-auth/react";
 import { prisma } from "~/server/db";
 
+import { env } from "~/env.mjs";
+
 export default function BetGame({
   gameData,
   gameTime,
@@ -14,7 +16,7 @@ export default function BetGame({
 
   return (
     <div className="flex  justify-center overflow-x-hidden bg-gray-300">
-      <div className="flex w-5/6 items-center justify-center bg-black">
+      <div className="flex w-5/6 flex-row items-center justify-center bg-black">
         <BetTime
           session={session}
           gameId={gameId}

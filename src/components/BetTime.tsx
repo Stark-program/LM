@@ -1,6 +1,8 @@
 import axios from "axios";
 import { format, addMinutes } from "date-fns";
 import { useState } from "react";
+import AdminEdit from "~/components/AdminEdit";
+import AdminDelete from "~/components/AdminDelete";
 
 export default function BetTime({
   session,
@@ -48,7 +50,10 @@ export default function BetTime({
           });
 
           return (
-            <div className="flex w-full flex-row space-y-2" key={index}>
+            <div
+              className="flex w-full flex-row space-x-4 space-y-2"
+              key={index}
+            >
               <li className="flex w-1/5 text-white  ">{betTime}</li>
               {similarBets !== undefined ? (
                 <h4 className="font-overpass text-white">
@@ -64,6 +69,14 @@ export default function BetTime({
                   Bet
                 </button>
               )}
+              <div className="flex w-full justify-end space-x-2 pr-4">
+                {session.data.user.email === "admin@lm.com" ? (
+                  <>
+                    <AdminDelete />
+                    <AdminEdit />
+                  </>
+                ) : null}
+              </div>
             </div>
           );
         })}

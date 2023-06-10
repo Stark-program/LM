@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 export default function Game({ gameData }: GameDataPropsType) {
-  const games: GameDataType[] = gameData || [];
+  const games: GameDataType[] = gameData;
 
   return (
     <div className="flex flex-col  space-y-10">
