@@ -12,7 +12,7 @@ export default function BetTime({
 }: BetTimeType) {
   const [activeBets, setActiveBets] = useState<CurrentBets[]>(currentBets);
   const date = new Date(gameTime);
-
+  console.log(session);
   const times = [];
   for (let i = 0; i < 120; i++) {
     const betTime = addMinutes(date, 90 + i).toISOString();
@@ -26,6 +26,7 @@ export default function BetTime({
       email: email,
       gameId: gameId,
     };
+
     const res = await axios.post("/api/handlebet", data);
     if (res.status === 201) {
       setActiveBets((prevState: CurrentBets[]) => [
@@ -36,6 +37,25 @@ export default function BetTime({
     if (res.status === 200 && res.data.failure) {
       alert(res.data.failure);
     }
+  };
+
+  const handleDelete = async (time: string, gameId: string) => {
+    const res = await axios.post("/api/deletebet", {
+      time: time,
+      gameId: gameId,
+    });
+    const resData = res.data as DeleteResData;
+    if (res.status === 201) {
+      activeBets.find((element: CurrentBets) => {
+        if (element.timeslot === resData.timeslot) {
+          const index = activeBets.indexOf(element);
+          if (index > -1) {
+            setActiveBets(() => activeBets.splice(index, 1));
+          }
+        }
+      });
+    }
+    console.log("parent", res);
   };
 
   return (
@@ -62,18 +82,27 @@ export default function BetTime({
               ) : (
                 <button
                   className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
-                  onClick={() =>
-                    void handleBet(time, session.data.user.email, gameId)
-                  }
+                  onClick={() => {
+                    if (!session.data) {
+                      alert("You must be signed in to place a bet");
+                    } else
+                      void handleBet(time, session.data?.user.email, gameId);
+                  }}
                 >
                   Bet
                 </button>
               )}
               <div className="flex w-full justify-end space-x-2 pr-4">
-                {session.data.user.email === "admin@lm.com" ? (
+                {session.data?.user.email === "admin@lm.com" ? (
                   <>
-                    <AdminDelete />
-                    <AdminEdit />
+                    <AdminDelete
+                      betInfo={{
+                        time: time,
+                        gameId: gameId,
+                        handleDelete: () => void handleDelete(time, gameId),
+                      }}
+                    />
+                    {/* <AdminEdit /> */}
                   </>
                 ) : null}
               </div>
@@ -85,6 +114,11 @@ export default function BetTime({
   );
 }
 
+type DeleteResData = {
+  success: boolean;
+  name: string;
+  timeslot: string;
+};
 interface BetTimeType {
   currentBets: CurrentBets;
   gameTime: string;
