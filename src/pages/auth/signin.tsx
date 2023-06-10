@@ -6,23 +6,41 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { getServerSession } from "next-auth/next";
+import { useRouter } from "next/router";
 import authOptions from "../api/auth/[...nextauth]";
+import FailedLogIn from "~/components/FailedLogIn";
 
 export default function SignIn({
   providers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [failedLogIn, setFailedLogIn] = useState(false);
+  const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const res = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: true,
-    });
+    try {
+      await signIn("credentials", {
+        email: email,
+        password: password,
+        redirect: false,
+      })
+        .then(({ ok, error }) => {
+          if (ok) {
+            setFailedLogIn(false);
+            router.push("/");
+          } else {
+            setFailedLogIn(true);
+            console.log(error);
+          }
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
   };
-  console.log(providers);
+
   return (
     <section className=" bg-gray-900">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -77,6 +95,7 @@ export default function SignIn({
               onSubmit={handleSubmit}
             >
               <div>
+                {failedLogIn ? <FailedLogIn /> : null}
                 <label
                   htmlFor="email"
                   className="mb-2 block text-sm font-medium text-white dark:text-white"

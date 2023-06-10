@@ -5,11 +5,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const reqData = req.body as BetReqType;
   try {
     console.log("req", req.body);
     const user = await prisma.user.findUnique({
       where: {
-        email: req.body.email,
+        email: reqData.email,
       },
     });
 
@@ -19,7 +20,7 @@ export default async function handler(
 
     const bet = await prisma.bet.findFirst({
       where: {
-        gameId: req.body.gameId,
+        gameId: reqData.gameId,
         userId: user.id,
       },
     });
@@ -27,16 +28,16 @@ export default async function handler(
     if (bet === null) {
       const createBet = await prisma.bet.create({
         data: {
-          gameId: req.body.gameId,
+          gameId: reqData.gameId,
           userId: user.id,
           userName: user.name,
-          timeslot: req.body.time,
+          timeslot: reqData.time,
         },
       });
       res.status(201).json({
         success: true,
         name: user.name,
-        timeslot: req.body.time,
+        timeslot: reqData.time,
       });
     } else res.status(200).json({ success: false });
   } catch (err) {
@@ -44,6 +45,10 @@ export default async function handler(
   }
 }
 
-// gameId String
-// userId String
-// timeslot DateTime
+type BetReqType = {
+  gameId: string;
+  userId: string;
+  userName: string;
+  time: string;
+  email: string;
+};

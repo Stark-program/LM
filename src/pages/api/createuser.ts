@@ -3,8 +3,10 @@ import { prisma } from "~/server/db";
 import * as bcrypt from "bcrypt";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const reqData = req.body as UserRequestType;
   const saltRounds = 10;
-  const plainTextPassword: string = req.body.password;
+  const plainTextPassword: string = reqData.password;
+
   try {
     bcrypt.genSalt(saltRounds, function (err, salt) {
       bcrypt.hash(plainTextPassword, salt, async function (err, hash) {
@@ -13,9 +15,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         } else {
           const user = await prisma.user.create({
             data: {
-              name: req.body.name,
-              email: req.body.email,
-              phone: req.body.phone,
+              name: reqData.name,
+              email: reqData.email,
+              phone: reqData.phone,
               password: hash,
             },
           });
@@ -28,3 +30,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
   res.status(200).json({ name: "John Doe" });
 }
+
+type UserRequestType = {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+};

@@ -10,9 +10,9 @@ export default function BetTime({
   gameTime,
   currentBets,
 }: BetTimeType) {
-  const [activeBets, setActiveBets] = useState<CurrentBets[]>(currentBets);
+  const [activeBets, setActiveBets] = useState<CurrentBets>(currentBets);
   const date = new Date(gameTime);
-  console.log(session);
+  console.log(currentBets);
   const times = [];
   for (let i = 0; i < 120; i++) {
     const betTime = addMinutes(date, 90 + i).toISOString();
