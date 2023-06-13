@@ -2,6 +2,7 @@ import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ParallaxProvider } from "react-scroll-parallax";
+import Header from "~/components/Header";
 
 import { api } from "~/utils/api";
 
@@ -14,6 +15,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <ParallaxProvider>
       <SessionProvider session={session}>
+        <Header />
         <Component {...pageProps} />
       </SessionProvider>
     </ParallaxProvider>
