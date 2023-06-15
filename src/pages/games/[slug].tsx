@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { prisma } from "~/server/db";
 
 import { env } from "~/env.mjs";
+import TableBets from "~/components/TableBets";
 
 export default function BetGame({
   gameData,
@@ -15,8 +16,8 @@ export default function BetGame({
   const session = useSession();
 
   return (
-    <div className="flex  justify-center overflow-x-hidden bg-gray-300">
-      <div className="flex w-5/6 flex-row items-center justify-center bg-black">
+    <div className="flex justify-center overflow-x-hidden bg-gray-300">
+      <div className="flex w-full flex-row items-center justify-center bg-black sm:w-5/6">
         <BetTime
           session={session}
           gameId={gameId}

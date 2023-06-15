@@ -7,7 +7,7 @@ export default function Games({ gameData }: GameDataPropsType) {
   return (
     <>
       <div className="flex h-screen justify-center overflow-x-hidden bg-gray-300">
-        <div className="flex w-5/6 items-center justify-center bg-black">
+        <div className="flex  w-full items-center justify-center bg-black sm:w-5/6">
           <Game gameData={gameData} />
         </div>
       </div>

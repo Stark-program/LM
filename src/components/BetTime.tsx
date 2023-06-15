@@ -57,12 +57,11 @@ export default function BetTime({
         }
       });
     }
-    console.log("parent", res);
   };
 
   return (
-    <div className="flex w-full flex-col">
-      <ul>
+    <div className="flex w-full flex-col ">
+      <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
           const similarBets = activeBets.find((element: CurrentBets) => {
@@ -73,17 +72,19 @@ export default function BetTime({
 
           return (
             <div
-              className="flex w-full flex-row space-x-4 space-y-2"
+              className="flex w-full flex-col items-center justify-center sm:flex-row "
               key={index}
             >
-              <li className="flex w-1/5 text-white  ">{betTime}</li>
+              <li className="flex w-full text-center  text-white underline decoration-2 sm:w-1/5   ">
+                {betTime}
+              </li>
               {similarBets !== undefined ? (
                 <h4 className="font-overpass text-white">
                   {similarBets.userName}
                 </h4>
               ) : (
                 <button
-                  className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
+                  className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
                   onClick={() => {
                     if (!session.data) {
                       alert("You must be signed in to place a bet");
