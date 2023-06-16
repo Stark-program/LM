@@ -1,7 +1,7 @@
 import axios from "axios";
 import { format, addMinutes } from "date-fns";
 import { useState } from "react";
-import BetAlreadyPlaced from "~/alerts/BetAlreadyPlaced";
+import BetAlreadyPlaced from "~/components/alerts/BetAlreadyPlaced";
 import AdminDelete from "~/components/AdminDelete";
 
 export default function BetTime({
