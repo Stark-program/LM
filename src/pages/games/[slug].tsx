@@ -4,9 +4,6 @@ import BetTime from "~/components/BetTime";
 import { useSession } from "next-auth/react";
 import { prisma } from "~/server/db";
 
-import { env } from "~/env.mjs";
-import TableBets from "~/components/TableBets";
-
 export default function BetGame({
   gameData,
   gameTime,

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { format, addMinutes } from "date-fns";
 import { useState } from "react";
-import AdminEdit from "~/components/AdminEdit";
+import BetAlreadyPlaced from "~/alerts/BetAlreadyPlaced";
 import AdminDelete from "~/components/AdminDelete";
 
 export default function BetTime({
@@ -11,8 +11,9 @@ export default function BetTime({
   currentBets,
 }: BetTimeType) {
   const [activeBets, setActiveBets] = useState<CurrentBets>(currentBets);
+  const [betHasBeenPlaced, setBetHasBeenPlaced] = useState(false);
   const date = new Date(gameTime);
-  console.log(currentBets);
+
   const times = [];
   for (let i = 0; i < 120; i++) {
     const betTime = addMinutes(date, 90 + i).toISOString();
@@ -37,8 +38,13 @@ export default function BetTime({
       ]);
     }
     if (res.status === 200 && !resData.success) {
-      alert("You have already placed a bet for this game");
+      // alert("You have already placed a bet for this game");
+      setBetHasBeenPlaced(true);
     }
+  };
+
+  const handleBetPlacedState = () => {
+    setBetHasBeenPlaced(false);
   };
 
   const handleDelete = async (time: string, gameId: string) => {
@@ -62,6 +68,9 @@ export default function BetTime({
 
   return (
     <div className="flex w-full flex-col ">
+      {betHasBeenPlaced ? (
+        <BetAlreadyPlaced handleState={handleBetPlacedState} />
+      ) : null}
       <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
