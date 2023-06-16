@@ -28,7 +28,7 @@ export default function Header() {
         </Link> */}
         <Link
           href="/auth/signup"
-          className="z-10 font-overpass font-bold text-white underline decoration-[#fd3594ff]  decoration-2 underline-offset-8"
+          className="z-10 flex items-center font-overpass font-bold text-white underline decoration-[#fd3594ff] decoration-2  underline-offset-8 lg:w-1/4"
         >
           Sign Up
         </Link>
@@ -37,7 +37,7 @@ export default function Header() {
   );
 }
 
-const AuthShowcase: React.FC = () => {
+export const AuthShowcase: React.FC = () => {
   const sessionData = useSession();
 
   // const { data: secretMessage } = api.example.getSecretMessage.useQuery(
@@ -46,14 +46,14 @@ const AuthShowcase: React.FC = () => {
   // );
 
   return (
-    <div className="flex flex-row items-center justify-center gap-4">
-      <p className="text-center font-overpass text-lg font-bold text-white">
+    <div className="flex w-full flex-col items-center justify-center lg:flex-row lg:gap-4">
+      <p className="w-full text-left font-overpass text-lg font-bold text-white lg:w-3/4">
         {sessionData.data?.user ? (
           <span>Logged in as {sessionData.data?.user?.name}</span>
         ) : null}
       </p>
       <button
-        className="z-10 font-overpass font-bold text-white underline decoration-[#fd3594ff]  decoration-2 underline-offset-8"
+        className="z-10 flex w-full justify-start font-overpass font-bold text-white underline decoration-[#fd3594ff] decoration-2  underline-offset-8 lg:w-1/4"
         onClick={sessionData.data ? () => void signOut() : () => void signIn()}
       >
         {sessionData.data ? "Sign out" : "Sign in"}

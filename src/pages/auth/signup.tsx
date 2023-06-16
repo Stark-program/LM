@@ -32,7 +32,7 @@ export default function SignUp() {
     }
   };
   return (
-    <section className=" bg-gray-900">
+    <section className=" h-screen bg-gray-950">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <div className="w-full rounded-lg border-gray-700 bg-gray-800 shadow dark:border sm:max-w-md md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
@@ -121,7 +121,7 @@ export default function SignUp() {
                   }}
                 />
               </div>
-              <div>
+              {/* <div>
                 <label
                   htmlFor="confirm-password"
                   className="mb-2 block text-sm font-medium text-white dark:text-white"
@@ -136,7 +136,7 @@ export default function SignUp() {
                   className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-500  bg-gray-700 p-2.5 text-white dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
                   required={true}
                 />
-              </div>
+              </div> */}
               {/* <div className="flex items-start">
                 <div className="flex h-5 items-center">
                   <input

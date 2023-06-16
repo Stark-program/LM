@@ -38,26 +38,26 @@ const Home: NextPage = () => {
             priority={true}
             className="relative"
           />
-          <div className="flex w-2/3 flex-col space-y-8 md:space-y-16 md:p-10 ">
-            <h1 className="m-1 font-overpass  text-3xl font-bold text-white md:text-7xl">
+          <div className="flex w-2/3 flex-col space-y-8 lg:space-y-16 lg:p-10 ">
+            <h1 className="m-1 font-overpass  text-3xl font-bold text-white md:text-5xl lg:text-7xl">
               Bet on Baseball with minute accuracy
             </h1>
-            <p className="font-overpass text-lg text-[#e5e0df]">
+            <p className="font-overpass text-lg text-[#e5e0df] md:text-xl">
               If you're looking for a novel way to bet on baseball games, you've
               come to the right place! We offer a unique betting platform that
               allows you to predict the exact minute a baseball game will end.
             </p>
             <Link
-              className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black hover:bg-[#85214f] md:w-1/6 "
+              className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black hover:bg-[#85214f] lg:w-1/6 "
               href={"/games"}
             >
               Start Betting Now
             </Link>
           </div>
         </div>
-        <div className="relative my-6 flex w-screen justify-center px-4 md:h-[410px]">
-          <div className="my-10 flex flex-col  rounded-lg border border-gray-300 bg-black p-10 md:w-2/3 md:pl-20">
-            <h1 className="text-left font-overpass text-3xl font-bold text-white md:text-7xl">
+        <div className="relative my-6 flex w-screen justify-center px-4 lg:h-[410px]">
+          <div className="my-10 flex flex-col  rounded-lg border border-gray-300 bg-black p-10 lg:w-2/3 lg:pl-20">
+            <h1 className="text-left font-overpass text-3xl font-bold text-white lg:text-7xl">
               How It Works
             </h1>
             <ul className="list-disc space-y-5 p-5 font-overpass font-bold text-[#e5e0df]">
@@ -80,12 +80,12 @@ const Home: NextPage = () => {
             fill={true}
             className="relative"
           />
-          <div className="my-10 rounded-lg border border-gray-300 bg-black p-10 md:w-2/3 md:pl-20">
+          <div className="my-10 rounded-lg border border-gray-300 bg-black p-10 lg:w-2/3 lg:pl-20">
             <h1 className="font-overpass text-4xl font-bold text-white">
               FAQs
             </h1>
-            <div className="grid md:grid-cols-2">
-              <div className=" my-2 rounded-md bg-[#770c3e] p-7 md:mr-2 md:p-14">
+            <div className="grid lg:grid-cols-2">
+              <div className=" my-2 rounded-md bg-[#770c3e] p-7 lg:mr-2 lg:p-14">
                 <h2 className="font-overpass text-xl font-bold text-white">
                   What if the game goes into extra innings?
                 </h2>
@@ -95,7 +95,7 @@ const Home: NextPage = () => {
                   be valid as long as the game ends at the predicted minute.
                 </p>
               </div>
-              <div className=" my-2 rounded-md bg-[#770c3e] p-7 md:ml-2 md:p-14">
+              <div className=" my-2 rounded-md bg-[#770c3e] p-7 lg:ml-2 lg:p-14">
                 <h2 className="font-overpass text-xl font-bold text-white">
                   How do I know if I won?
                 </h2>
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
                   We'll notify you via email and update your account balance.
                 </p>
               </div>
-              <div className=" my-2 rounded-md bg-[#770c3e] p-7 md:mr-2 md:p-14">
+              <div className=" my-2 rounded-md bg-[#770c3e] p-7 lg:mr-2 lg:p-14">
                 <h2 className="font-overpass text-xl font-bold text-white">
                   What is the payout for winning bets?
                 </h2>
@@ -114,7 +114,7 @@ const Home: NextPage = () => {
                   placing your bets.
                 </p>
               </div>
-              <div className=" my-2 rounded-md bg-[#770c3e] p-7 md:ml-2 md:p-14">
+              <div className=" my-2 rounded-md bg-[#770c3e] p-7 lg:ml-2 lg:p-14">
                 <h2 className="font-overpass text-xl font-bold text-white">
                   Is it legal to bet on baseball games online?
                 </h2>
