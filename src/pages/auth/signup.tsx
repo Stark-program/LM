@@ -12,9 +12,23 @@ export default function SignUp() {
   });
 
   const handleFormSubmit = async (e) => {
-    const res = await axios.post("/api/createuser", user);
-    if (res.status === 201) {
-      router.push("/");
+    try {
+      const res = await axios.post("/api/createuser", user);
+      console.log(res);
+      if (res.status === 201) {
+        router.push("/");
+      }
+    } catch (err) {
+      if (err.response.status === 424) {
+        alert("Account already exists");
+        setUser({
+          name: "",
+          email: "",
+          phone: "",
+          password: "",
+        });
+      }
+      console.log(err);
     }
   };
   return (
@@ -25,7 +39,7 @@ export default function SignUp() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-white dark:text-white md:text-2xl">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={false}>
+            <form className="space-y-4 md:space-y-6">
               <div>
                 <label
                   htmlFor="name"

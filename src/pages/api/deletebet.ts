@@ -42,7 +42,7 @@ export default async function handler(
         name: user.name,
         timeslot: data.time,
       });
-    } else res.status(401).json({ failure: "Not an Admin" });
+    } else res.status(200).json({ failure: "Not an Admin" });
   } catch (err) {
     console.log(err);
   }

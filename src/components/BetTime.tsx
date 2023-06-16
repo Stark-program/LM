@@ -46,6 +46,7 @@ export default function BetTime({
       time: time,
       gameId: gameId,
     });
+    console.log(res);
     const resData = res.data as DeleteResData;
     if (res.status === 201) {
       activeBets.find((element: CurrentBets) => {

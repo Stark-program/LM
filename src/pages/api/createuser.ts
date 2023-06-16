@@ -13,22 +13,32 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         if (err) {
           console.log(err);
         } else {
-          const user = await prisma.user.create({
-            data: {
-              name: reqData.name,
+          const findUser = await prisma.user.findFirst({
+            where: {
               email: reqData.email,
-              phone: reqData.phone,
-              password: hash,
             },
           });
+          console.log(findUser);
+          if (findUser?.email === reqData.email) {
+            res.status(424).json({ message: "Account already exists" });
+          } else if (!findUser) {
+            const user = await prisma.user.create({
+              data: {
+                name: reqData.name,
+                email: reqData.email,
+                phone: reqData.phone,
+                password: hash,
+              },
+            });
+            console.log(user);
+            res.status(201).json({ message: "user created" });
+          }
         }
       });
     });
-    res.status(201);
   } catch (err) {
     console.log(err);
   }
-  res.status(200).json({ name: "John Doe" });
 }
 
 type UserRequestType = {
