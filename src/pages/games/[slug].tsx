@@ -13,8 +13,8 @@ export default function BetGame({
   const session = useSession();
 
   return (
-    <div className="flex justify-center overflow-x-hidden bg-gray-300">
-      <div className="flex w-full flex-row items-center justify-center bg-black sm:w-5/6">
+    <div className="flex justify-center overflow-x-hidden bg-gray-950">
+      <div className="flex w-full flex-row items-center justify-center bg-gray-950 sm:w-5/6">
         <BetTime
           session={session}
           gameId={gameId}
