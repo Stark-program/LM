@@ -13,7 +13,6 @@ export default function BetTime({
   const [activeBets, setActiveBets] = useState<CurrentBets>(currentBets);
   const [betHasBeenPlaced, setBetHasBeenPlaced] = useState(false);
   const date = new Date(gameTime);
-
   const times = [];
   for (let i = 0; i < 120; i++) {
     const betTime = addMinutes(date, 90 + i).toISOString();
@@ -52,15 +51,16 @@ export default function BetTime({
       time: time,
       gameId: gameId,
     });
-    console.log(res);
+
     const resData = res.data as DeleteResData;
     if (res.status === 201) {
       activeBets.find((element: CurrentBets) => {
         if (element.timeslot === resData.timeslot) {
-          const index = activeBets.indexOf(element);
-          if (index > -1) {
-            setActiveBets(() => activeBets.splice(index, 1));
-          }
+          const arr = [...activeBets];
+          const filterRemove = arr.filter((time) => {
+            return time.timeslot !== element.timeslot;
+          });
+          setActiveBets(filterRemove);
         }
       });
     }
