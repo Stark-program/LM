@@ -26,13 +26,12 @@ export default function SignIn({
         password: password,
         redirect: false,
       })
-        .then(({ ok, error }) => {
+        .then(({ ok }) => {
           if (ok) {
             setFailedLogIn(false);
-            router.push("/");
+            router.push("/").catch((err) => console.log(err));
           } else {
             setFailedLogIn(true);
-            console.log(error);
           }
         })
         .catch((err) => console.log(err));
@@ -63,7 +62,7 @@ export default function SignIn({
                         data-te-ripple-init
                         data-te-ripple-color="light"
                         className="mb-2  flex w-full justify-center rounded bg-[#7289da] px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
-                        onClick={() => signIn(provider.id)}
+                        onClick={() => void signIn(provider.id)}
                       >
                         Discord
                       </button>
@@ -77,7 +76,7 @@ export default function SignIn({
                     key={provider.name}
                   >
                     <button
-                      onClick={() => signIn(provider.id)}
+                      onClick={() => void signIn(provider.id)}
                       type="button"
                       data-te-ripple-init
                       data-te-ripple-color="light"

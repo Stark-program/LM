@@ -57,7 +57,7 @@ export default function BetTime({
       activeBets.find((element: CurrentBets) => {
         if (element.timeslot === resData.timeslot) {
           const arr = [...activeBets];
-          const filterRemove = arr.filter((time) => {
+          const filterRemove = arr.filter((time: CurrentBets) => {
             return time.timeslot !== element.timeslot;
           });
           setActiveBets(filterRemove);
