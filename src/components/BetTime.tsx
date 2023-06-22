@@ -74,11 +74,13 @@ export default function BetTime({
       <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
-          const similarBets = activeBets.find((element: CurrentBets) => {
-            if (element.timeslot === time) {
-              return element;
+          const similarBets: CurrentBets = activeBets.find(
+            (element: CurrentBets) => {
+              if (element.timeslot === time) {
+                return element;
+              }
             }
-          });
+          );
 
           return (
             <div

@@ -40,9 +40,10 @@ const Home: NextPage = () => {
               Bet on Baseball with minute accuracy
             </h1>
             <p className="font-overpass text-lg text-[#e5e0df] md:text-xl">
-              If you're looking for a novel way to bet on baseball games, you've
-              come to the right place! We offer a unique betting platform that
-              allows you to predict the exact minute a baseball game will end.
+              If you{`&apos`}re looking for a novel way to bet on baseball
+              games, you{`&apos`}ve come to the right place! We offer a unique
+              betting platform that allows you to predict the exact minute a
+              baseball game will end.
             </p>
             <Link
               className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black hover:bg-[#85214f] lg:w-1/6 "
@@ -98,7 +99,8 @@ const Home: NextPage = () => {
                 </h2>
                 <p className="mt-4 font-overpass text-[#e5e0df]">
                   If the game ends at the precise minute you predicted, you win!
-                  We'll notify you via email and update your account balance.
+                  We{`&apos`}ll notify you via email and update your account
+                  balance.
                 </p>
               </div>
               <div className=" my-2 rounded-md bg-[#770c3e] p-7 lg:mr-2 lg:p-14">
@@ -117,7 +119,7 @@ const Home: NextPage = () => {
                 </h2>
                 <p className="mt-4 font-overpass text-[#e5e0df]">
                   Yes, it is legal to bet on baseball games online as long as
-                  you're of legal gambling age and betting on a licensed
+                  you{`&apos`}re of legal gambling age and betting on a licensed
                   platform.
                 </p>
               </div>

@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { prisma } from "~/server/db";
 
 export default function BetGame({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   gameData,
   gameTime,
   gameId,
@@ -29,6 +30,7 @@ export default function BetGame({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.query;
   const { time } = context.query;
+
   const res = await axios.get(
     `http://statsapi.mlb.com/api/v1/game/${slug}/content`
   );
