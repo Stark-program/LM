@@ -99,8 +99,7 @@ const Home: NextPage = () => {
                 </h2>
                 <p className="mt-4 font-overpass text-[#e5e0df]">
                   If the game ends at the precise minute you predicted, you win!
-                  We{`&apos`}ll notify you via email and update your account
-                  balance.
+                  We'll notify you via email and update your account balance.
                 </p>
               </div>
               <div className=" my-2 rounded-md bg-[#770c3e] p-7 lg:mr-2 lg:p-14">
@@ -119,7 +118,7 @@ const Home: NextPage = () => {
                 </h2>
                 <p className="mt-4 font-overpass text-[#e5e0df]">
                   Yes, it is legal to bet on baseball games online as long as
-                  you{`&apos`}re of legal gambling age and betting on a licensed
+                  you're of legal gambling age and betting on a licensed
                   platform.
                 </p>
               </div>
