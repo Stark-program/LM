@@ -31,7 +31,6 @@ export default function Game({ gameData }: GameDataPropsType) {
                   <Link
                     className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
                     href={{
-                      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                       pathname: `/games/${gameData[index]?.id}`,
                       query: {
                         time: game.time,

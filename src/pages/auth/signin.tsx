@@ -17,7 +17,7 @@ export default function SignIn({
   const [password, setPassword] = useState("");
   const [failedLogIn, setFailedLogIn] = useState(false);
   const router = useRouter();
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import type { GetServerSideProps } from "next";
 import axios from "axios";
 import Game from "~/components/Game";

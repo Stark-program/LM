@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import { prisma } from "~/server/db";
 
 export default function BetGame({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   gameData,
   gameTime,
   gameId,
@@ -32,7 +31,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { time } = context.query;
 
   const res = await axios.get(
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     `http://statsapi.mlb.com/api/v1/game/${slug?.toString()}/content`
   );
   const currentBets = await prisma.bet.findMany({
@@ -46,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       gameData: res.data as GameDataType,
       gameTime: time,
       gameId: slug,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
       currentBets: JSON.parse(JSON.stringify(currentBets)),
     },
   };

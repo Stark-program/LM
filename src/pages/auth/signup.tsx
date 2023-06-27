@@ -19,7 +19,6 @@ export default function SignUp() {
         void router.push("/");
       }
     } catch (err) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (err.response.status === 424) {
         alert("Account already exists");
         setUser({

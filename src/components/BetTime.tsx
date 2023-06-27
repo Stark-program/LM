@@ -31,7 +31,6 @@ export default function BetTime({
 
     const resData = res.data as PlaceBetResData;
     if (res.status === 201) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       setActiveBets((prevState) => [
         ...prevState,
         { userName: resData.name, timeslot: resData.timeslot },

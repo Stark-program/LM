@@ -21,7 +21,6 @@ export default async function handler(
 
     const user = await prisma.user.findUnique({
       where: {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         email: session.user.email!,
       },
     });
