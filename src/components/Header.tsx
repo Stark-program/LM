@@ -19,7 +19,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="z-10 flex w-1/3 justify-end space-x-10">
-        {AuthShowcase()}
+        {<AuthShowcase />}
         {/* <Link
           href="/auth/signin"
           className="z-10 font-overpass font-bold text-white underline decoration-[#fd3594ff]  decoration-2 underline-offset-8"

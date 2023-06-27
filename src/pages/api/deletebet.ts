@@ -21,7 +21,8 @@ export default async function handler(
 
     const user = await prisma.user.findUnique({
       where: {
-        email: session.user.email,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        email: session.user.email!,
       },
     });
     if (user?.isAdmin) {

@@ -10,7 +10,7 @@ export default function BetTime({
   gameTime,
   currentBets,
 }: BetTimeType) {
-  const [activeBets, setActiveBets] = useState<CurrentBets>(currentBets);
+  const [activeBets, setActiveBets] = useState<CurrentBets[]>(currentBets);
   const [betHasBeenPlaced, setBetHasBeenPlaced] = useState(false);
   const date = new Date(gameTime);
   const times = [];
@@ -31,7 +31,8 @@ export default function BetTime({
 
     const resData = res.data as PlaceBetResData;
     if (res.status === 201) {
-      setActiveBets((prevState: CurrentBets) => [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      setActiveBets((prevState) => [
         ...prevState,
         { userName: resData.name, timeslot: resData.timeslot },
       ]);
@@ -74,7 +75,7 @@ export default function BetTime({
       <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
-          const similarBets: CurrentBets = activeBets.find(
+          const similarBets: CurrentBets | undefined = activeBets.find(
             (element: CurrentBets) => {
               if (element.timeslot === time) {
                 return element;
@@ -87,9 +88,9 @@ export default function BetTime({
               className="flex w-full flex-col items-center justify-center sm:flex-row "
               key={index}
             >
-              <li className="flex w-full text-center  text-white underline decoration-2 sm:w-1/5   ">
+              {/* <li className="flex w-full text-center  text-white underline decoration-2 sm:w-1/5   ">
                 {betTime}
-              </li>
+              </li> */}
               {similarBets !== undefined ? (
                 <h4 className="font-overpass text-white">
                   {similarBets.userName}
@@ -104,7 +105,7 @@ export default function BetTime({
                       void handleBet(time, session.data?.user.email, gameId);
                   }}
                 >
-                  Bet
+                  {betTime}
                 </button>
               )}
               <div className="flex w-full justify-end space-x-2 pr-4">
@@ -140,7 +141,7 @@ type PlaceBetResData = {
   timeslot: string;
 };
 interface BetTimeType {
-  currentBets: CurrentBets;
+  currentBets: CurrentBets[];
   gameTime: string;
   gameId: string;
   // betTime: Array<string>;

@@ -11,14 +11,15 @@ export default function SignUp() {
     password: "",
   });
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async () => {
     try {
       const res = await axios.post("/api/createuser", user);
       console.log(res);
       if (res.status === 201) {
-        router.push("/");
+        void router.push("/");
       }
     } catch (err) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (err.response.status === 424) {
         alert("Account already exists");
         setUser({

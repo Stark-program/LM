@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}&teamId=115`
   );
 
-  const games_response = res.data.dates;
+  const games_response: GamesResponseType[] = res.data.dates;
 
   const gameData: GameDataType[] = [];
 

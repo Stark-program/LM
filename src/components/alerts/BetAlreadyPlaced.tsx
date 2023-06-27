@@ -1,5 +1,4 @@
 export default function BetAlreadyPlaced({ handleState }) {
-  console.log(handleState);
   return (
     <div
       className="relative z-10"

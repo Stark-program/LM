@@ -32,7 +32,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { time } = context.query;
 
   const res = await axios.get(
-    `http://statsapi.mlb.com/api/v1/game/${slug}/content`
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    `http://statsapi.mlb.com/api/v1/game/${slug?.toString()}/content`
   );
   const currentBets = await prisma.bet.findMany({
     where: {
@@ -45,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       gameData: res.data as GameDataType,
       gameTime: time,
       gameId: slug,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       currentBets: JSON.parse(JSON.stringify(currentBets)),
     },
   };
