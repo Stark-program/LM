@@ -2,11 +2,14 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 import { AuthShowcase } from "../Header";
 const MobileMenu = (props: MobileMenuProps) => {
   const { mobileMenu, mobileMenuShow } = props;
-
+  const session = useSession();
+  console.log("session", session);
   return (
     <Transition.Root show={mobileMenuShow} as={Fragment}>
       <Dialog as="div" className="relative z-20" onClose={mobileMenu}>
@@ -57,6 +60,11 @@ const MobileMenu = (props: MobileMenuProps) => {
                   </Transition.Child>
                   <div className="flex h-full flex-col overflow-y-scroll bg-black bg-opacity-90  py-6 shadow-xl">
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                      {session.data?.user ? (
+                        <h1 className="font-overpass text-xl font-bold text-white">
+                          Logged in as {session.data?.user?.name}
+                        </h1>
+                      ) : null}
                       <div className=" flex h-20 items-center border-t  border-gray-500 px-6 text-left font-overpass text-xl font-bold text-white underline decoration-[#fd3594ff] decoration-2  underline-offset-8">
                         <Link
                           href="/"
@@ -76,7 +84,7 @@ const MobileMenu = (props: MobileMenuProps) => {
                         </Link>
                       </div>
 
-                      <div className=" flex h-20 items-center border-b border-gray-500 px-6 text-left font-overpass text-xl font-bold text-white">
+                      <div className=" flex h-20 items-center justify-center border-b border-gray-500 px-6 text-left font-overpass text-xl font-bold text-white">
                         {/* <Link
                           href="/auth/signin"
                           className="flex h-full w-full items-center"
@@ -84,7 +92,7 @@ const MobileMenu = (props: MobileMenuProps) => {
                         >
                           Signin
                         </Link> */}
-                        <AuthShowcase />
+                        <AuthShowcaseMobile />
                       </div>
                       <div className=" flex h-20 items-center border-b  border-gray-500 px-6 text-left font-overpass text-xl font-bold text-white underline decoration-[#fd3594ff] decoration-2 underline-offset-8">
                         <Link
@@ -92,7 +100,7 @@ const MobileMenu = (props: MobileMenuProps) => {
                           className="flex h-full w-full items-center"
                           onClick={mobileMenu}
                         >
-                          Signup
+                          Sign up
                         </Link>
                       </div>
 
@@ -106,6 +114,26 @@ const MobileMenu = (props: MobileMenuProps) => {
         </div>
       </Dialog>
     </Transition.Root>
+  );
+};
+
+export const AuthShowcaseMobile: React.FC = () => {
+  const sessionData = useSession();
+
+  // const { data: secretMessage } = api.example.getSecretMessage.useQuery(
+  //   undefined, // no input
+  //   { enabled: sessionData?.user !== undefined }
+  // );
+
+  return (
+    <div className="flex h-full w-full items-center justify-center lg:flex-row lg:gap-4">
+      <button
+        className="z-10 flex h-full w-full items-center font-overpass font-bold text-white underline decoration-[#fd3594ff] decoration-2  underline-offset-8 lg:w-1/4"
+        onClick={sessionData.data ? () => void signOut() : () => void signIn()}
+      >
+        {sessionData.data ? "Sign out" : "Sign in"}
+      </button>
+    </div>
   );
 };
 
