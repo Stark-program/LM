@@ -40,10 +40,9 @@ const Home: NextPage = () => {
               Bet on Baseball with minute accuracy
             </h1>
             <p className="font-overpass text-lg text-[#e5e0df] md:text-xl">
-              If you{`&apos`}re looking for a novel way to bet on baseball
-              games, you{`&apos`}ve come to the right place! We offer a unique
-              betting platform that allows you to predict the exact minute a
-              baseball game will end.
+              If you're looking for a novel way to bet on baseball games, you've
+              come to the right place! We offer a unique betting platform that
+              allows you to predict the exact minute a baseball game will end.
             </p>
             <Link
               className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black hover:bg-[#85214f] lg:w-1/6 "
