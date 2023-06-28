@@ -21,9 +21,9 @@ const Home: NextPage = () => {
         />
         <meta property="og:image" content="https://i.imgur.com/R6XBN7r.png" />
         <meta name="twitter:card" content="https://i.imgur.com/R6XBN7r.png" />
-        <meta property="twitter:domain" content="starkbyteapps.com" />
+        <meta property="twitter:domain" content="onthemin.net" />
         <meta property="twitter:url" content="https://onthemin.net/" />
-        <meta name="twitter:title" content="StarkByte Applications" />
+        <meta name="twitter:title" content="On The Minute" />
         <meta
           name="twitter:description"
           content="Bet on when YOU think the game will end. Easy as that."
