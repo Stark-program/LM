@@ -1,4 +1,4 @@
-export default function BetAlreadyPlaced({ handleState }) {
+export default function BetAlreadyPlaced({ handleState, message }: PropsType) {
   return (
     <div
       className="relative z-10"
@@ -54,12 +54,11 @@ export default function BetAlreadyPlaced({ handleState }) {
                     className="text-base font-semibold leading-6 text-gray-900"
                     id="modal-title"
                   >
-                    Bet has already been placed for this account
+                    {message.title}
                   </h3>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Our records show you have already placed a bet for this
-                      game. If this is a mistake please contact Alex.
+                      {message.description}
                     </p>
                   </div>
                 </div>
@@ -80,3 +79,11 @@ export default function BetAlreadyPlaced({ handleState }) {
     </div>
   );
 }
+
+type PropsType = {
+  handleState: () => void;
+  message: {
+    title: string;
+    description: string;
+  };
+};
