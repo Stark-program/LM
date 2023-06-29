@@ -3,6 +3,7 @@ import { format, addMinutes } from "date-fns";
 import { useState } from "react";
 import BetAlreadyPlaced from "~/components/alerts/BetAlreadyPlaced";
 import AdminDelete from "~/components/AdminDelete";
+import NotLoggedIn from "./alerts/NotLoggedIn";
 
 export default function BetTime({
   session,
@@ -126,7 +127,7 @@ export default function BetTime({
                 </button>
               )}
               {accountNotSignedIn ? (
-                <BetAlreadyPlaced
+                <NotLoggedIn
                   handleState={handleAccountNotSignedInState}
                   message={{
                     title: "You are not logged in",
