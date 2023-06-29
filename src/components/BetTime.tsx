@@ -84,6 +84,20 @@ export default function BetTime({
           }}
         />
       ) : null}
+      {confirmBetState ? (
+        <ConfirmBet
+          confirmInfo={{
+            //   betTime: betTime,
+            //   handleConfirm: () =>
+            //     void handleConfirmBet(
+            //       time,
+            //       session.data?.user.email,
+            //       gameId
+            //     ),
+            handleState: () => setConfirmBetState(false),
+          }}
+        />
+      ) : null}
       <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
@@ -108,7 +122,8 @@ export default function BetTime({
                 <button
                   className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
                   onClick={() => {
-                    void handleBet(time, session.data?.user.email, gameId);
+                    void setConfirmBetState(true);
+                    // void handleBet(time, session.data?.user.email, gameId);
                   }}
                 >
                   {betTime}
@@ -118,20 +133,7 @@ export default function BetTime({
               {/* 
               --------------------WORK IN PROGRESS. CONFIRM BUTTON NOT WORKING PROPERLY ------------------
                 */}
-              {confirmBetState ? (
-                <ConfirmBet
-                  confirmInfo={{
-                    //   betTime: betTime,
-                    //   handleConfirm: () =>
-                    //     void handleConfirmBet(
-                    //       time,
-                    //       session.data?.user.email,
-                    //       gameId
-                    //     ),
-                    handleState: () => setConfirmBetState(false),
-                  }}
-                />
-              ) : null}
+
               <div className="flex w-full justify-end space-x-2 pr-4">
                 {session.data?.user.email === "admin@lm.com" ? (
                   <>
@@ -150,9 +152,6 @@ export default function BetTime({
           );
         })}
       </ul>
-      <button className="font-bold text-white" onClick={handleConfirmBet}>
-        Test
-      </button>
     </div>
   );
 }
