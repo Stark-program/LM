@@ -116,7 +116,7 @@ export default function BetTime({
                 <button
                   className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
                   onClick={() => {
-                    if (!session.data) {
+                    if (session.data === null) {
                       setAccountNotSignedIn(true);
                     } else
                       void handleBet(time, session.data?.user.email, gameId);
