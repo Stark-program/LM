@@ -84,7 +84,7 @@ export default function BetTime({
           }}
         />
       ) : null}
-      {confirmBetState ? (
+      {/* {confirmBetState ? (
         <ConfirmBet
           confirmInfo={{
             //   betTime: betTime,
@@ -97,7 +97,7 @@ export default function BetTime({
             handleState: () => setConfirmBetState(false),
           }}
         />
-      ) : null}
+      ) : null} */}
       <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
@@ -122,8 +122,8 @@ export default function BetTime({
                 <button
                   className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
                   onClick={() => {
-                    void setConfirmBetState(true);
-                    // void handleBet(time, session.data?.user.email, gameId);
+                    // void setConfirmBetState(true);
+                    void handleBet(time, session.data?.user.email, gameId);
                   }}
                 >
                   {betTime}
