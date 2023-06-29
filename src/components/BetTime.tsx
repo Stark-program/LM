@@ -3,7 +3,6 @@ import { format, addMinutes } from "date-fns";
 import { useState } from "react";
 import BetAlreadyPlaced from "~/components/alerts/BetAlreadyPlaced";
 import AdminDelete from "~/components/AdminDelete";
-import NotLoggedIn from "./alerts/NotLoggedIn";
 
 export default function BetTime({
   session,
@@ -13,7 +12,6 @@ export default function BetTime({
 }: BetTimeType) {
   const [activeBets, setActiveBets] = useState<CurrentBets[]>(currentBets);
   const [betHasBeenPlaced, setBetHasBeenPlaced] = useState(false);
-  const [accountNotSignedIn, setAccountNotSignedIn] = useState(false);
   const [confirmBetState, setConfirmBetState] = useState(false);
   const date = new Date(gameTime);
   const times = [];
@@ -49,9 +47,6 @@ export default function BetTime({
 
   const handleBetPlacedState = () => {
     setBetHasBeenPlaced(false);
-  };
-  const handleAccountNotSignedInState = () => {
-    setAccountNotSignedIn(false);
   };
 
   //----------------- WORK IN PROGRESS --------------------------------
@@ -116,26 +111,13 @@ export default function BetTime({
                 <button
                   className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
                   onClick={() => {
-                    if (session.data === null) {
-                      setAccountNotSignedIn(true);
-                    } else
-                      void handleBet(time, session.data?.user.email, gameId);
+                    void handleBet(time, session.data?.user.email, gameId);
                     // else void handleBet();
                   }}
                 >
                   {betTime}
                 </button>
               )}
-              {accountNotSignedIn ? (
-                <NotLoggedIn
-                  handleState={handleAccountNotSignedInState}
-                  message={{
-                    title: "You are not logged in",
-                    description:
-                      "Please login to place a bet, if you do not have an account please signup",
-                  }}
-                />
-              ) : null}
 
               {/* 
               --------------------WORK IN PROGRESS. CONFIRM BUTTON NOT WORKING PROPERLY ------------------

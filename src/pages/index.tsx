@@ -2,8 +2,10 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
+  const session = useSession();
   return (
     <>
       <Head>
@@ -63,12 +65,18 @@ const Home: NextPage = () => {
               come to the right place! We offer a unique betting platform that
               allows you to predict the exact minute a baseball game will end.
             </p>
-            <Link
-              className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black hover:bg-[#85214f] lg:w-1/6 "
-              href={"/games"}
-            >
-              Start Betting Now
-            </Link>
+            {session.data ? (
+              <Link
+                className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black hover:bg-[#85214f] lg:w-1/6 "
+                href={"/games"}
+              >
+                Start Betting Now
+              </Link>
+            ) : (
+              <div className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black  lg:w-1/6 ">
+                Please login to continue
+              </div>
+            )}
           </div>
         </div>
         <div className="relative my-6 flex w-screen justify-center px-4 lg:h-[410px]">
