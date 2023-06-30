@@ -73,9 +73,12 @@ const Home: NextPage = () => {
                 Start Betting Now
               </Link>
             ) : (
-              <div className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black  lg:w-1/6 ">
+              <Link
+                className=" rounded bg-[#fd3594ff] p-2 text-center font-overpass text-lg font-bold text-black  lg:w-1/6 "
+                href={"/auth/signin"}
+              >
                 Please login to continue
-              </div>
+              </Link>
             )}
           </div>
         </div>

@@ -13,6 +13,7 @@ export default function BetTime({
   const [activeBets, setActiveBets] = useState<CurrentBets[]>(currentBets);
   const [betHasBeenPlaced, setBetHasBeenPlaced] = useState(false);
   const [confirmBetState, setConfirmBetState] = useState(false);
+  const [betInfo, setBetInfo] = useState({ time: "", email: "", gameId: "" });
   const date = new Date(gameTime);
   const times = [];
   for (let i = 0; i < 120; i++) {
@@ -36,9 +37,11 @@ export default function BetTime({
         ...prevState,
         { userName: resData.name, timeslot: resData.timeslot },
       ]);
+      setConfirmBetState(false);
     }
     if (res.status === 200 && !resData.success) {
       // alert("You have already placed a bet for this game");
+      setConfirmBetState(false);
       setBetHasBeenPlaced(true);
     }
   };
@@ -84,20 +87,18 @@ export default function BetTime({
           }}
         />
       ) : null}
-      {/* {confirmBetState ? (
+      {confirmBetState ? (
         <ConfirmBet
           confirmInfo={{
-            //   betTime: betTime,
-            //   handleConfirm: () =>
-            //     void handleConfirmBet(
-            //       time,
-            //       session.data?.user.email,
-            //       gameId
-            //     ),
+            // betTime: betTime,
+            handleConfirm: async () => {
+              console.log(betInfo);
+              await handleBet(betInfo.time, betInfo.email, betInfo.gameId);
+            },
             handleState: () => setConfirmBetState(false),
           }}
         />
-      ) : null} */}
+      ) : null}
       <ul className=" space-y-10 px-2 sm:ml-6">
         {times.map((time: string, index: number) => {
           const betTime = format(new Date(time), "hh:mm:ss");
@@ -122,8 +123,13 @@ export default function BetTime({
                 <button
                   className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
                   onClick={() => {
-                    // void setConfirmBetState(true);
-                    void handleBet(time, session.data?.user.email, gameId);
+                    void setConfirmBetState(true);
+                    // void handleBet(time, session.data?.user.email, gameId);
+                    setBetInfo({
+                      time: time,
+                      email: session.data?.user.email,
+                      gameId: gameId,
+                    });
                   }}
                 >
                   {betTime}
