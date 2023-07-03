@@ -6,7 +6,7 @@ export default function Game({ gameData }: GameDataPropsType) {
   const games: GameDataType[] = gameData;
   if (gameData !== undefined) {
     return (
-      <div className="flex flex-col  space-y-10">
+      <div className="flex w-full  flex-col items-center justify-center space-y-10 ">
         {games.map((game, index) => {
           const startDate = new Date(game.time);
           const date_time = format(startDate, "MM/dd/yyyy hh:mm:ss");
@@ -18,16 +18,17 @@ export default function Game({ gameData }: GameDataPropsType) {
             return (
               <div
                 key={index}
-                className="flex flex-col items-center align-middle text-white md:flex-row md:space-x-16"
+                className="mx-2 flex flex-col items-center space-y-4 rounded-lg bg-slate-800 py-4 align-middle text-white md:mx-0 md:w-1/2"
               >
-                <div className="flex w-full justify-center underline decoration-2 md:w-1/5">
+                <div className="flex w-2/3 justify-center text-center font-overpass text-2xl md:w-4/5">{`${game.teams.home.team.name}  vs ${game.teams.away.team.name} `}</div>
+                <div className="flex w-full justify-center  text-lg decoration-2 md:w-full">
                   {date_time}
                 </div>
-                <div className="flex w-2/3 justify-center text-center md:w-2/5">{`${game.teams.home.team.name}(${game.teams.home.leagueRecord.wins} - ${game.teams.home.leagueRecord.losses}) vs ${game.teams.away.team.name}(${game.teams.away.leagueRecord.wins} - ${game.teams.away.leagueRecord.losses}) `}</div>
-                <div className="flex w-full justify-center md:w-1/5 md:justify-end">
+
+                {/* <div className="flex w-full justify-center md:w-1/5 md:justify-end">
                   {game.dayNight}
-                </div>
-                <div className="flex w-full justify-center md:w-1/5 md:justify-end">
+                </div> */}
+                <div className="flex w-full justify-center  ">
                   <Link
                     className="rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f]"
                     href={{
