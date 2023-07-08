@@ -14,7 +14,7 @@ export default function BetGame({
 
   return (
     <div className="flex justify-center overflow-x-hidden bg-gray-950">
-      <div className="flex w-full flex-row items-center justify-center bg-gray-950 sm:w-5/6">
+      <div className="flex h-screen w-full  flex-row items-center justify-center bg-gray-950 sm:w-5/6">
         <BetTime
           session={session}
           gameId={gameId}

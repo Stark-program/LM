@@ -20,10 +20,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const res: ResDataType = await axios.get(
     `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}&teamId=115`
   );
-  console.log(res.data.dates[0].games);
+  // const gamesInProgress = await axios.get(
+  //   `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1`
+  // );
 
   const games_response: GamesResponseType[] = res.data.dates;
-
+  console.log(games_response);
   const gameData: GameDataType[] = [];
 
   for (let i = 0; i < games_response.length; i++) {

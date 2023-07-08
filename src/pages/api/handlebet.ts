@@ -26,6 +26,20 @@ export default async function handler(
     });
 
     if (bet === null) {
+      const sameTime = await prisma.bet.findFirst({
+        where: {
+          timeslot: reqData.time,
+        },
+      });
+
+      if (sameTime !== null) {
+        return res.status(200).json({
+          success: false,
+          timeTaken: true,
+          message:
+            "A bet has already been placed for that time, please choose another",
+        });
+      }
       const createBet = await prisma.bet.create({
         data: {
           gameId: reqData.gameId,

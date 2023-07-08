@@ -3,7 +3,10 @@ export default function AdminDelete({ betInfo }: BetInfo) {
 
   return (
     <>
-      <button className="text-white" onClick={() => void handleDelete()}>
+      <button
+        className="rounded bg-[#fd3594ff]  font-overpass  font-bold text-black"
+        onClick={() => void handleDelete()}
+      >
         Delete Bet
       </button>
     </>

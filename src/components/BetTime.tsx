@@ -4,6 +4,8 @@ import { useState } from "react";
 import BetAlreadyPlaced from "~/components/alerts/BetAlreadyPlaced";
 import AdminDelete from "~/components/AdminDelete";
 
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+
 export default function BetTime({
   session,
   gameId,
@@ -14,8 +16,11 @@ export default function BetTime({
   const [betHasBeenPlaced, setBetHasBeenPlaced] = useState(false);
   const [confirmBetState, setConfirmBetState] = useState(false);
   const [betInfo, setBetInfo] = useState({ time: "", email: "", gameId: "" });
+  const [time, setTime] = useState(undefined);
+  const [timeTaken, setTimeTaken] = useState(false);
   const date = new Date(gameTime);
   const times = [];
+
   for (let i = 0; i < 120; i++) {
     const betTime = addMinutes(date, 90 + i).toISOString();
 
@@ -23,12 +28,13 @@ export default function BetTime({
   }
 
   const handleBet = async (time: string, email: string, gameId: string) => {
+    const timeConvert = new Date(time).toISOString();
+
     const data = {
-      time: time,
+      time: timeConvert,
       email: email,
       gameId: gameId,
     };
-
     const res = await axios.post("/api/handlebet", data);
 
     const resData = res.data as PlaceBetResData;
@@ -41,8 +47,12 @@ export default function BetTime({
     }
     if (res.status === 200 && !resData.success) {
       // alert("You have already placed a bet for this game");
-      setConfirmBetState(false);
-      setBetHasBeenPlaced(true);
+      if (resData.timeTaken) {
+        setTimeTaken(true);
+      } else {
+        setConfirmBetState(false);
+        setBetHasBeenPlaced(true);
+      }
     }
   };
 
@@ -50,7 +60,11 @@ export default function BetTime({
     setBetHasBeenPlaced(false);
   };
 
-  //----------------- WORK IN PROGRESS --------------------------------
+  const handleTimeTakenState = () => {
+    setTimeTaken(false);
+    setConfirmBetState(false);
+  };
+
   const handleConfirmBet = () => {
     setConfirmBetState(true);
   };
@@ -60,15 +74,18 @@ export default function BetTime({
       time: time,
       gameId: gameId,
     });
-
+    console.log(res);
     const resData = res.data as DeleteResData;
-    if (res.status === 201) {
+    if (res.data.success) {
+      console.log("delete", activeBets);
       activeBets.find((element: CurrentBets) => {
         if (element.timeslot === resData.timeslot) {
           const arr = [...activeBets];
+
           const filterRemove = arr.filter((time: CurrentBets) => {
             return time.timeslot !== element.timeslot;
           });
+          console.log(filterRemove);
           setActiveBets(filterRemove);
         }
       });
@@ -83,85 +100,100 @@ export default function BetTime({
           message={{
             title: "Bet has already been placed for this account",
             description:
-              "  Our records show you have already placed a bet for this game. If this is a mistake please contact Alex.",
+              "Our records show you have already placed a bet for this game. If this is a mistake please contact Alex.",
           }}
         />
       ) : null}
       {confirmBetState ? (
         <ConfirmBet
           confirmInfo={{
-            // betTime: betTime,
             handleConfirm: async () => {
-              console.log(betInfo);
               await handleBet(betInfo.time, betInfo.email, betInfo.gameId);
             },
             handleState: () => setConfirmBetState(false),
           }}
         />
       ) : null}
-      <ul className=" space-y-10 px-2 sm:ml-6">
-        {times.map((time: string, index: number) => {
-          const betTime = format(new Date(time), "hh:mm:ss");
-          const similarBets: CurrentBets | undefined = activeBets.find(
-            (element: CurrentBets) => {
-              if (element.timeslot === time) {
-                return element;
+      {timeTaken ? (
+        <BetAlreadyPlaced
+          handleState={handleTimeTakenState}
+          message={{
+            title: "Time already taken",
+            description:
+              "Our records show a bet has already been placed for this time, if this is a mistake please contact Alex",
+          }}
+        />
+      ) : null}
+      <div className="flex h-screen w-full flex-col ">
+        <div className="">
+          <h1 className="mt-10 text-center font-overpass text-lg text-white">
+            {" "}
+            Game starts at {format(date, "hh:mm aaaa")}
+          </h1>
+        </div>
+        <div className="flex flex-col space-y-2 md:flex-row md:justify-center md:space-y-0">
+          <TimePicker
+            label="Basic time picker"
+            className="h-12 w-full bg-white md:w-1/2"
+            onChange={(newValue) => void setTime(newValue)}
+          />
+          <button
+            className="h-12 w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5 md:ml-2"
+            onClick={() => {
+              void setConfirmBetState(true);
+              setBetInfo({
+                time: time.$d,
+                email: session.data?.user.email,
+                gameId: gameId,
+              });
+            }}
+          >
+            Submit
+          </button>
+        </div>
+        <ul className=" mt-10 flex w-full flex-col justify-center space-y-10 px-2 ">
+          {activeBets
+            .sort((a, b) => {
+              const aDate = new Date(a.timeslot);
+              const bDate = new Date(b.timeslot);
+              return aDate - bDate;
+            })
+            .map(
+              (bet: { userName: string; timeslot: string }, index: number) => {
+                return (
+                  <div className="flex w-full flex-row" key={index}>
+                    <div className="w-1/2">
+                      <h1 className="text-center font-overpass text-lg text-white">
+                        {bet.userName}
+                      </h1>
+                    </div>
+                    <div className="w-1/2">
+                      <h1 className="text-center font-overpass text-lg text-white">
+                        {format(new Date(bet.timeslot), "hh:mm aaaa")}
+                      </h1>
+                    </div>
+                    {session.data?.user.email === "admin@lm.com" ? (
+                      <>
+                        <AdminDelete
+                          betInfo={{
+                            time: time,
+                            gameId: gameId,
+                            handleDelete: () => void handleDelete(time, gameId),
+                          }}
+                        />
+                        {/* <AdminEdit /> */}
+                      </>
+                    ) : null}
+                  </div>
+                );
               }
-            }
-          );
-
-          return (
-            <div
-              className="flex w-full flex-col items-center justify-center sm:flex-row "
-              key={index}
-            >
-              {similarBets !== undefined ? (
-                <h4 className="font-overpass font-bold text-white">
-                  {similarBets.userName}
-                </h4>
-              ) : (
-                <button
-                  className="w-full rounded bg-[#fd3594ff] p-2 font-overpass text-lg font-bold text-black hover:bg-[#85214f] sm:w-1/5"
-                  onClick={() => {
-                    void setConfirmBetState(true);
-                    // void handleBet(time, session.data?.user.email, gameId);
-                    setBetInfo({
-                      time: time,
-                      email: session.data?.user.email,
-                      gameId: gameId,
-                    });
-                  }}
-                >
-                  {betTime}
-                </button>
-              )}
-
-              {/* 
-              --------------------WORK IN PROGRESS. CONFIRM BUTTON NOT WORKING PROPERLY ------------------
-                */}
-
-              <div className="flex w-full justify-end space-x-2 pr-4">
-                {session.data?.user.email === "admin@lm.com" ? (
-                  <>
-                    <AdminDelete
-                      betInfo={{
-                        time: time,
-                        gameId: gameId,
-                        handleDelete: () => void handleDelete(time, gameId),
-                      }}
-                    />
-                    {/* <AdminEdit /> */}
-                  </>
-                ) : null}
-              </div>
-            </div>
-          );
-        })}
-      </ul>
+            )}
+        </ul>
+      </div>
     </div>
   );
 }
-// ----------------- WORK IN PROGRESS ----------------------------------------------
+
 const ConfirmBet: React.FC = ({ confirmInfo }: ConfirmBetProps) => {
   return (
     <div
@@ -181,13 +213,13 @@ const ConfirmBet: React.FC = ({ confirmInfo }: ConfirmBetProps) => {
                     className="h-6 w-6 text-red-600"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
                     />
                   </svg>
@@ -205,7 +237,7 @@ const ConfirmBet: React.FC = ({ confirmInfo }: ConfirmBetProps) => {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+            <div className="space-y-2 bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 md:space-y-0">
               <button
                 onClick={() => void confirmInfo.handleConfirm()}
                 type="button"
@@ -237,6 +269,7 @@ type PlaceBetResData = {
   success: boolean;
   name: string;
   timeslot: string;
+  timeTaken?: boolean;
 };
 interface BetTimeType {
   currentBets: CurrentBets[];
