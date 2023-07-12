@@ -37,10 +37,18 @@ export default async function handler(
           id: findBet?.id,
         },
       });
+
+      const allBets = await prisma.bet.findMany({
+        where: {
+          gameId: data.gameId,
+        },
+      });
+      console.log("allbets", allBets);
       res.status(201).json({
         success: true,
         name: user.name,
         timeslot: data.time,
+        allBets: allBets,
       });
     } else res.status(200).json({ failure: "Not an Admin" });
   } catch (err) {

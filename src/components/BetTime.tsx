@@ -76,21 +76,29 @@ export default function BetTime({
     });
     console.log(res);
     const resData = res.data as DeleteResData;
+    console.log("resData", resData);
     if (res.data.success) {
-      console.log("delete", activeBets);
-      activeBets.find((element: CurrentBets) => {
-        if (element.timeslot === resData.timeslot) {
-          const arr = [...activeBets];
+      console.log("delete", resData);
+      const currentBets = [...activeBets];
+      setActiveBets([...resData.allBets]);
+      // activeBets.find((element: CurrentBets) => {
+      //   console.log("this logged", element);
+      // if (element.timeslot === resData.timeslot) {
+      //   console.log("this also logged");
+      //   const arr = [...activeBets];
 
-          const filterRemove = arr.filter((time: CurrentBets) => {
-            return time.timeslot !== element.timeslot;
-          });
-          console.log(filterRemove);
-          setActiveBets(filterRemove);
-        }
-      });
+      //   const filterRemove = arr.filter((time: CurrentBets) => {
+      //     console.log("this logged as well");
+      //     return time.timeslot !== element.timeslot;
+      //   });
+      //   console.log(filterRemove);
+      // setActiveBets(filterRemove);
+      // window.location.reload();
+      // }
+      // });
     }
   };
+  console.log("active", activeBets);
 
   return (
     <div className="flex w-full flex-col ">
@@ -264,6 +272,7 @@ type DeleteResData = {
   success: boolean;
   name: string;
   timeslot: string;
+  allBets: CurrentBets[];
 };
 type PlaceBetResData = {
   success: boolean;
@@ -287,6 +296,7 @@ interface BetTimeType {
 }
 
 interface CurrentBets {
+  id?: number;
   gameId: string;
   userId: string;
   userName: string;

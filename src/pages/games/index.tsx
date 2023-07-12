@@ -1,13 +1,30 @@
 import type { GetServerSideProps } from "next";
 import axios from "axios";
 import Game from "~/components/Game";
-import { format, add } from "date-fns";
+import { format, add, sub } from "date-fns";
 export default function Games({ gameData }: GameDataPropsType) {
   return (
     <>
       <div className="flex h-screen justify-center overflow-x-hidden bg-gray-950">
         <div className="flex  w-full items-center justify-center bg-gray-950 sm:w-5/6">
-          <Game gameData={gameData} />
+          {gameData.length > 0 ? (
+            <Game gameData={gameData} />
+          ) : (
+            <div className="flex w-1/2 flex-col justify-center font-overpass text-xl text-white">
+              <h1 className="text-center">No games found.</h1>
+              <h2 className="text-center">
+                Games are not scheduled for today or tomorrow.
+              </h2>
+              <p className="text-center">
+                {" "}
+                If this is not true.. please contact Alex.
+              </p>
+              <p className="text-center">
+                {" "}
+                If you dont know Alex, then send a smoke signal.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
@@ -15,10 +32,10 @@ export default function Games({ gameData }: GameDataPropsType) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const currentDate = format(new Date(), "yyyy-MM-dd");
+  const currentDate = format(sub(new Date(), { hours: 12 }), "yyyy-MM-dd");
   const futureDate = format(add(new Date(), { days: 1 }), "yyyy-MM-dd");
   const res: ResDataType = await axios.get(
-    `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}&teamId=115`
+    `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=2023-07-16&teamId=115`
   );
   // const gamesInProgress = await axios.get(
   //   `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1`
