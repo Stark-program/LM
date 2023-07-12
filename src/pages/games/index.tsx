@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const currentDate = format(sub(new Date(), { hours: 12 }), "yyyy-MM-dd");
   const futureDate = format(add(new Date(), { days: 1 }), "yyyy-MM-dd");
   const res: ResDataType = await axios.get(
-    `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=2023-07-16&teamId=115`
+    `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1&startDate=${currentDate}&endDate=${futureDate}&teamId=115`
   );
   // const gamesInProgress = await axios.get(
   //   `http://statsapi.mlb.com/api/v1/schedule/games/?sportId=1`
