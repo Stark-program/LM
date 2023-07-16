@@ -28,6 +28,7 @@ export default async function handler(
     if (bet === null) {
       const sameTime = await prisma.bet.findFirst({
         where: {
+          gameId: reqData.gameId,
           timeslot: reqData.time,
         },
       });
