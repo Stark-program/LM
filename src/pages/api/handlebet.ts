@@ -7,7 +7,6 @@ export default async function handler(
 ) {
   const reqData = req.body as BetReqType;
   try {
-    console.log("req", req.body);
     const user = await prisma.user.findUnique({
       where: {
         email: reqData.email,
