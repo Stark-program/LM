@@ -150,12 +150,12 @@ export default function SignIn({
                     </label>
                   </div> */}
                 </div>
-                {/* <a
-                  href="#"
+                <Link
+                  href="/auth/forgotpassword"
                   className="dark:text-primary-500 text-sm font-medium text-white hover:underline"
                 >
                   Forgot password?
-                </a> */}
+                </Link>
               </div>
               <button
                 type="submit"
